@@ -1,0 +1,293 @@
+/* 自定义字体 */
+.gFont {
+  font-family: "Times New Roman", Times, serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.mainbox {
+  width: 100vw;
+  overflow: hidden;
+}
+.mainbox .container {
+  display: flex;
+  height: 100vh;
+  flex-wrap: nowrap;
+}
+.mainbox .container > .leftbox {
+  width: 200px;
+  flex-shrink: 0;
+  box-shadow: 4px 0px #ccc;
+}
+.mainbox .container .maincenter {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+}
+/* ============================================ */
+.loginbox {
+  min-height: 100vh;
+  display: block;
+  width: 100%;
+  position: fixed;
+  background: transparent url('https://picsum.photos/1600/1300') no-repeat top fixed;
+  background-size: cover;
+}
+.loginbox .main {
+  background-color: rgba(255, 255, 255, 0.6);
+  padding: 30px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 600px;
+  width: 100%;
+}
+.loginbox h1 {
+  font-size: 36px;
+  font-weight: bold;
+  background-image: linear-gradient(to right, red, orange, yellow, green, yellow, orange, red, orange, yellow, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-size: 200% 100%;
+  animation: bgp 6s infinite linear;
+  text-align: center;
+}
+.loginbox .txt .fr {
+  color: #dc004e;
+}
+@media screen and (max-width: 640px) {
+  .loginbox .main {
+    width: 80%;
+    margin: auto;
+  }
+}
+.MuiSnackbarContent-root {
+  padding: 0 !important;
+  margin-top: 0;
+}
+.MuiSnackbarContent-root .MuiSnackbarContent-message {
+  text-align: center;
+  display: block;
+  width: 100%;
+}
+.MuiSnackbarContent-root .MuiSnackbarContent-action {
+  width: 100%;
+}
+.MuiSnackbarContent-root .MuiSnackbarContent-action span {
+  display: inline-block;
+  width: 100%;
+}
+.MuiSnackbarContent-root .MuiSnackbarContent-action .msgtxt {
+  text-align: left;
+}
+/* 文章列表 */
+#mainlist .topbox {
+  background: transparent url('https://picsum.photos/1200/400') no-repeat top scroll;
+  background-size: cover;
+  width: 100%;
+  height: 300px;
+  padding-top: 120px;
+}
+#mainlist .topbox .mainbox {
+  height: 300px;
+  background-color: rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+#mainlist .topbox .mainbox .head {
+  position: absolute;
+  top: -50px;
+  left: 10px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+}
+#mainlist .topbox .mainbox .head img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#mainlist .topbox .mainbox .showdetail {
+  position: absolute;
+  top: -20px;
+  right: 30px;
+  overflow: hidden;
+}
+#mainlist .topbox .mainbox .add {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  overflow: hidden;
+}
+#mainlist .topbox .mainbox .usernews {
+  padding: 90px 30px 0 30px;
+}
+#mainlist .topbox .mainbox .usernews .tit {
+  font-size: 18px;
+  line-height: 30px;
+  text-align: left;
+  font-weight: bold;
+  color: #333;
+}
+#mainlist .topbox .mainbox .usernews .desc {
+  font-size: 14px;
+  line-height: 30px;
+  text-align: left;
+  color: #666;
+}
+/* 用户列表 */
+#userList .MuiTypography-root {
+  padding: 30px;
+}
+#userList .topbox {
+  background: transparent url('https://picsum.photos/1200/400') no-repeat top scroll;
+  background-size: cover;
+  width: 100%;
+  padding-top: 120px;
+  box-sizing: border-box;
+  margin-bottom: 30px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0px 0px 14px #ccc;
+}
+#userList .topbox .mainbox {
+  background-color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  width: 100%;
+}
+#userList .topbox .mainbox .head {
+  position: absolute;
+  top: -50px;
+  left: 10px;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  overflow: hidden;
+}
+#userList .topbox .mainbox .head img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#userList .topbox .mainbox .showdetail {
+  position: absolute;
+  top: -20px;
+  right: 30px;
+  overflow: hidden;
+}
+#userList .topbox .mainbox .add {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  overflow: hidden;
+}
+#userList .topbox .mainbox .usernews {
+  padding: 90px 30px 0 30px;
+}
+#userList .topbox .mainbox .usernews .tit {
+  font-size: 18px;
+  line-height: 30px;
+  text-align: left;
+  font-weight: bold;
+  color: #333;
+}
+#userList .topbox .mainbox .usernews .desc {
+  font-size: 14px;
+  line-height: 30px;
+  text-align: left;
+  color: #666;
+}
+/* 编辑个人信息表单 */
+#EditUserData .mainbox {
+  background-color: #cfe8fc;
+  height: calc(100vh - 90px);
+  overflow: auto;
+  padding: 30px;
+  box-sizing: border-box;
+}
+#EditUserData .mainbox h1 {
+  font-size: 36px;
+  height: 90px;
+  line-height: 90px;
+  font-weight: bold;
+  background-image: linear-gradient(to right, red, orange, yellow, green, yellow, orange, red, orange, yellow, green, yellow, orange, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-size: 200% 100%;
+  animation: bgp 6s infinite linear;
+  text-align: left;
+}
+#EditUserData .mainbox .input .tit {
+  font-size: 14px;
+  line-height: 40px;
+  margin: 0 10px;
+  color: #666;
+  display: inline-block;
+  vertical-align: top;
+}
+#EditUserData .mainbox .input img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  overflow: hidden;
+  border: 4px solid #fff;
+  border-radius: 6px;
+}
+#EditUserData .mainbox .input .formline {
+  margin: 0 10px;
+}
+#EditUserData .mainbox .questionbox {
+  padding: 10px;
+}
+#EditUserData .mainbox .questionbox .box {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 30px;
+}
+#EditUserData .mainbox .questionbox .answerbox {
+  padding: 20px;
+}
+@-webkit-keyframes bgp {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+}
+/* 搜索栏 */
+.searchline {
+  max-width: 900px;
+  margin: 30px auto;
+  width: 100%;
+}
+.searchline input {
+  width: 100%;
+  font-size: 14px;
+  line-height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.searchline button {
+  margin-left: 30px;
+}
+/* home */
+#home .cardList {
+  padding: 30px 0;
+  text-align: center;
+}
+#nameinputbox input {
+  font-size: 14px;
+  line-height: 30px;
+  width: 200px;
+  text-align: left;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+}
+/* card */
+.cardbox .MuiTypography-root {
+  text-align: left;
+}

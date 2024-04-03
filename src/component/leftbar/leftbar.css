@@ -1,0 +1,28 @@
+#leftbar .logo {
+  width: 60%;
+  padding: 30px 0;
+  display: block;
+  margin: auto;
+}
+#leftbar {
+
+}
+#leftbar p {
+  text-align: left;
+}
+#leftbar .navbox a {
+  line-height: 40px;
+}
+#leftbar .navbox i {
+  color: #666;
+  font-size: 20px;
+  display: inline-block;
+  margin-right: 20px;
+}
+#leftbar .navbox .sure {
+  background-color: #2196f3;
+  color: #f4f4f4;
+}
+#leftbar .navbox .sure i {
+  color: #f4f4f4;
+}

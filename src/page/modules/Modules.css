@@ -1,0 +1,55 @@
+#Modules h2 {
+  font-size: 30px;
+}
+#Modules .maincenter {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+#Modules .maincenter .topline {
+  min-height: 140px;
+  width: 100%;
+  background: transparent url('https://picsum.photos/600/200') no-repeat top fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+#Modules .maincenter .topline .topMain {
+  padding: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#Modules .maincenter .topline h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#Modules .maincenter .topline button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+#Modules .maincenter .mainList {
+  background-color: #fff;
+  width: 100%;
+  flex-grow: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#Modules .maincenter .mainList .txt {
+  line-height: 30px;
+  font-size: 16px;
+  padding: 10px;
+}
+#Modules .maincenter .mainList h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#Modules .maincenter .mainList .tablebox {
+  max-height: calc(100% - 90px);
+  overflow: auto;
+}
+#Modules .maincenter .mainList .tablebox .tableline {
+  width: 100%;
+}

@@ -1,0 +1,56 @@
+#Programme h2 {
+  font-size: 30px;
+}
+#Programme .maincenter {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+#Programme .maincenter .topline {
+  min-height: 140px;
+  width: 100%;
+  background: transparent url('https://picsum.photos/600/200') no-repeat top fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+#Programme .maincenter .topline .topMain {
+  padding: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#Programme .maincenter .topline h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#Programme .maincenter .topline p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+#Programme .maincenter .mainList {
+  background-color: #fff;
+  width: 100%;
+  flex-grow: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#Programme .maincenter .mainList h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#Programme .maincenter .mainList .tablebox {
+  max-height: calc(100% - 90px);
+  overflow: auto;
+  padding-bottom: 120px;
+}
+#Programme .btnline {
+  padding: 10px 0;
+  width: 100%;
+}
+#Programme .btnline button {
+  margin: 0 10px;
+}

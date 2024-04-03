@@ -1,0 +1,12 @@
+.tiptxt {
+  padding: 10px;
+  font-size: 16px;
+  line-height: 30px;
+}
+.tablebox {
+  overflow: auto;
+}
+.tabbox {
+  height: calc(100vh - 120px);
+  overflow: auto;
+}

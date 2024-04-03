@@ -1,0 +1,101 @@
+#coursework h2 {
+  font-size: 30px;
+}
+#coursework .maincenter {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+#coursework .maincenter .topline {
+  min-height: 140px;
+  width: 100%;
+  background: transparent url('https://picsum.photos/600/200') no-repeat top fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+#coursework .maincenter .topline .topMain {
+  padding: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#coursework .maincenter .topline .topMain a {
+  display: block;
+  text-align: center;
+}
+#coursework .maincenter .topline h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#coursework .maincenter .topline p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+#coursework .maincenter .topline button {
+  margin-right: 10px;
+}
+#coursework .maincenter .centerbox {
+  background-color: #fff;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+#coursework .maincenter .centerbox .leftbox {
+  width: 70%;
+  text-align: left;
+  padding: 10px;
+}
+#coursework .maincenter .centerbox .leftbox .timesline {
+  padding: 10px 0;
+  text-align: left;
+}
+#coursework .maincenter .centerbox .righttxt {
+  font-size: 24px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px 0;
+}
+#coursework .maincenter .centerbox .righttxt span {
+  font-size: 40px;
+}
+#coursework .maincenter .mainList {
+  background-color: #fff;
+  width: 100%;
+  flex-grow: 1;
+  padding: 10px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+#coursework .maincenter .mainList h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#coursework .maincenter .mainList .tablebox {
+  max-height: 100%;
+  overflow: auto;
+}
+#coursework .subform {
+  width: 600px;
+  display: block;
+  margin: auto;
+}
+#coursework .subform .line {
+  padding: 10px 0;
+  text-align: left;
+}
+#coursework .subform .line span {
+  font-size: 14px;
+  line-height: 40px;
+  display: inline-block;
+  text-align: left;
+  margin-right: 30px;
+}
+#coursework .subform input[type="file"] {
+  display: inline-block;
+}
