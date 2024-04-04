@@ -8,6 +8,10 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import logo from '../../assets//logo.png';
+
+
+
 
 function LeftBar (props) {
   const [selectedIndex, setSelectedIndex] = useState(props.tabNav);
@@ -30,18 +34,19 @@ function LeftBar (props) {
       {/* 渲染顶部 */}
       <Card variant="outlined" className='topbox'>
         <CardContent>
-          <img className='logo' src="/images/logo.png" alt="" />
-          <Typography color="textSecondary" gutterBottom>
-            Student Name:xxx
-          </Typography>
-          <Typography color="textSecondary" gutterBottom>
-            Student ID:xxx
-          </Typography>
-          <Typography color="textSecondary">
-            Year:xxx
-          </Typography>
-        </CardContent>
-      </Card>
+          <img className='logo' src={logo} alt="logo" />
+            <Typography className='details' gutterBottom>
+              Student Name:xxx
+            </Typography>
+            <Typography className='details' gutterBottom>
+               Student ID:xxx
+            </Typography>
+            <Typography className='details' >
+               Year:xxx
+            </Typography>
+          </CardContent>
+        </Card>
+
 
       {/* 渲染导航栏 */}
       <Divider />

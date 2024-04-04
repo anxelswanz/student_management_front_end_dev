@@ -1,9 +1,7 @@
 
 import React, {useState, useEffect, Fragment, useRef, createRef} from 'react';
 import LeftBar from './../../component/leftbar/leftbar'
-import {
-  useNavigate
-} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import './Modules.css'
 import {Table,TableBody,TableCell,TableContainer,TableHead,TableRow,Paper,Button,IconButton,Collapse,Box} from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';

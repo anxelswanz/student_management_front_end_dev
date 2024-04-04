@@ -5,7 +5,7 @@ import './coursework.css';
 import { Button, TextField, Divider } from '@material-ui/core';
 
 function CourseWork() {
-  const navigate = useNavigate();
+
 // 初始化模块信息列表
   const modules = [
     { name: 'Module Name1', startTime: '2024-01-01', endTime: '2024-01-02', score: '90.1' },
