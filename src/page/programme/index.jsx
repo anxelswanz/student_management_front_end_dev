@@ -11,7 +11,7 @@ function Programme() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(moduleDataUrl)
+    axios.get(moduleDataUrl, { withCredentials: true, crossdomain: true }) // 设置withCredentials和crossdomain选项
       .then(response => {
         setStudentModules(response.data);
       })
