@@ -118,7 +118,6 @@ function Myprograme () {
                     <TableCell align="center">start time</TableCell>
                     <TableCell align="center">end time</TableCell>
                     <TableCell align="center">grade</TableCell>
-                    <TableCell align="center">opration</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -131,9 +130,9 @@ function Myprograme () {
                     <TableCell align="center">xxx</TableCell>
                     <TableCell align="center">xx</TableCell>
                     <TableCell align="right">
-                      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        Open Menu
-                      </Button>
+                    <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                       <Menu
                         id="simple-menu"
                         anchorEl={anchorEl}
@@ -143,7 +142,6 @@ function Myprograme () {
                       >
                         <MenuItem onClick={handleClose}>withdraw</MenuItem>
                         <MenuItem onClick={handleClose}>suspend</MenuItem>
-                        <MenuItem onClick={handleClose}>enroll</MenuItem>
                       </Menu>
                     </TableCell>
                   </TableRow>
@@ -162,10 +160,10 @@ function Myprograme () {
               <Paper square>
                 <Tabs value={value2} onChange={handleChange2} indicatorColor="secondary"
                   textColor="secondary">
-                  <Tab label="A专业" {...a11yProps(0)} />
-                  <Tab label="B专业" {...a11yProps(1)} />
-                  <Tab label="C专业" {...a11yProps(2)} />
-                  <Tab label="D专业" {...a11yProps(3)} />
+                  <Tab label="Software" {...a11yProps(0)} />
+                  <Tab label="Mechanical" {...a11yProps(1)} />
+                  <Tab label="Electronics Hardware" {...a11yProps(2)} />
+                  <Tab label="Electromechanical" {...a11yProps(3)} />
                 </Tabs>
               </Paper>
 
@@ -183,7 +181,6 @@ function Myprograme () {
                       <TableCell align="center">start time</TableCell>
                       <TableCell align="center">end time</TableCell>
                       <TableCell align="center">grade</TableCell>
-                      <TableCell align="center">opration</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -196,9 +193,9 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
-                        </Button>
+                      <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -221,9 +218,9 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
-                        </Button>
+                      <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -246,8 +243,8 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
+                        <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                           Actions
                         </Button>
                         <Menu
                           id="simple-menu"
@@ -271,9 +268,9 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
-                        </Button>
+                      <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -296,9 +293,9 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
-                        </Button>
+                      <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -321,9 +318,9 @@ function Myprograme () {
                       <TableCell align="center">xxx</TableCell>
                       <TableCell align="center">xx</TableCell>
                       <TableCell align="right">
-                        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                          Open Menu
-                        </Button>
+                      <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                         <Menu
                           id="simple-menu"
                           anchorEl={anchorEl}
@@ -376,9 +373,9 @@ function Myprograme () {
                     <TableCell align="center">xxx</TableCell>
                     <TableCell align="center">xx</TableCell>
                     <TableCell align="right">
-                      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        Open Menu
-                      </Button>
+                    <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                       <Menu
                         id="simple-menu"
                         anchorEl={anchorEl}
@@ -422,9 +419,9 @@ function Myprograme () {
                     <TableCell align="center">xxx</TableCell>
                     <TableCell align="center">xx</TableCell>
                     <TableCell align="right">
-                      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                        Open Menu
-                      </Button>
+                    <Button variant="contained" color="primary" aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+                         Actions
+                    </Button>
                       <Menu
                         id="simple-menu"
                         anchorEl={anchorEl}

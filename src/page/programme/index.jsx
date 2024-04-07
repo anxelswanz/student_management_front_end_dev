@@ -3,20 +3,31 @@ import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../component/leftbar/leftbar';
 import { TableCell, Paper, TableContainer, Table, TableHead, TableRow, TableBody, Button } from '@material-ui/core';
 import axios from 'axios';
-import { moduleDataUrl } from '../../api/api';
+import { moduleList, programmeDataUrl } from '../../api/api';
 import './Programme.css';
 
 function Programme() {
   const [studentModules, setStudentModules] = useState([]);
+  const [programmeData, setProgrammeData] = useState({});
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(moduleDataUrl, { withCredentials: true, crossdomain: true }) // 设置withCredentials和crossdomain选项
+    // 获取模块数据
+    axios.get(moduleList) 
       .then(response => {
         setStudentModules(response.data);
       })
       .catch(error => {
         console.error('Error fetching modules:', error);
+      });
+
+    // 获取程序名称和描述数据
+    axios.get(programmeDataUrl) 
+      .then(response => {
+        setProgrammeData(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching programme data:', error);
       });
   }, []);
 
@@ -28,8 +39,9 @@ function Programme() {
       <div className='maincenter'>
         <div className='topline'>
           <div className='topMain'>
-            <h2 className='gFont'>Programme Name</h2>
-            <p>description:Programme Introduce</p>
+            {/* 渲染程序名称和描述 */}
+            <h2 className='gFont'>{programmeData.name}</h2>
+            <p>{programmeData.description}</p>
           </div>
         </div>
         <div className='mainList'>
@@ -49,7 +61,6 @@ function Programme() {
                   <TableCell component="th" scope="row" className="gFont">{module.module}</TableCell>
                   <TableCell align="right" className="gFont">{module.StartTime}</TableCell>
                   <TableCell align="right" className="gFont">{module.EndTime}</TableCell>
-
                   </TableRow>
                 ))}
               </TableBody>

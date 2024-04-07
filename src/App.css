@@ -24,37 +24,7 @@
   padding: 20px;
 }
 /* ============================================ */
-.loginbox {
-  min-height: 100vh;
-  display: block;
-  width: 100%;
-  position: fixed;
-  background: transparent url('https://picsum.photos/1600/1300') no-repeat top fixed;
-  background-size: cover;
-}
-.loginbox .main {
-  background-color: rgba(255, 255, 255, 0.6);
-  padding: 30px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 600px;
-  width: 100%;
-}
-.loginbox h1 {
-  font-size: 36px;
-  font-weight: bold;
-  background-image: linear-gradient(to right, red, orange, yellow, green, yellow, orange, red, orange, yellow, green, yellow, orange, red);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-size: 200% 100%;
-  animation: bgp 6s infinite linear;
-  text-align: center;
-}
-.loginbox .txt .fr {
-  color: #dc004e;
-}
+
 @media screen and (max-width: 640px) {
   .loginbox .main {
     width: 80%;
@@ -197,81 +167,7 @@
   text-align: left;
   color: #666;
 }
-/* 编辑个人信息表单 */
-#EditUserData .mainbox {
-  background-color: #cfe8fc;
-  height: calc(100vh - 90px);
-  overflow: auto;
-  padding: 30px;
-  box-sizing: border-box;
-}
-#EditUserData .mainbox h1 {
-  font-size: 36px;
-  height: 90px;
-  line-height: 90px;
-  font-weight: bold;
-  background-image: linear-gradient(to right, red, orange, yellow, green, yellow, orange, red, orange, yellow, green, yellow, orange, red);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-background-size: 200% 100%;
-  animation: bgp 6s infinite linear;
-  text-align: left;
-}
-#EditUserData .mainbox .input .tit {
-  font-size: 14px;
-  line-height: 40px;
-  margin: 0 10px;
-  color: #666;
-  display: inline-block;
-  vertical-align: top;
-}
-#EditUserData .mainbox .input img {
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  overflow: hidden;
-  border: 4px solid #fff;
-  border-radius: 6px;
-}
-#EditUserData .mainbox .input .formline {
-  margin: 0 10px;
-}
-#EditUserData .mainbox .questionbox {
-  padding: 10px;
-}
-#EditUserData .mainbox .questionbox .box {
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 30px;
-}
-#EditUserData .mainbox .questionbox .answerbox {
-  padding: 20px;
-}
-@-webkit-keyframes bgp {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: -100% 0;
-  }
-}
-/* 搜索栏 */
-.searchline {
-  max-width: 900px;
-  margin: 30px auto;
-  width: 100%;
-}
-.searchline input {
-  width: 100%;
-  font-size: 14px;
-  line-height: 40px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 0 10px;
-  box-sizing: border-box;
-}
-.searchline button {
-  margin-left: 30px;
-}
+
 /* home */
 #home .cardList {
   padding: 30px 0;

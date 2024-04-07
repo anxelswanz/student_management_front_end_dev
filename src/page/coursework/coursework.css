@@ -11,7 +11,7 @@
 #coursework .maincenter .topline {
   min-height: 140px;
   width: 100%;
-  background: transparent url('https://picsum.photos/600/200') no-repeat top fixed;
+  background: transparent url('../../assets/background.png') no-repeat top fixed;
   background-size: cover;
   box-sizing: border-box;
   flex-shrink: 0;
