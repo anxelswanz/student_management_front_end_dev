@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../component/leftbar/leftbar';
 import { TableCell, Paper, TableContainer, Table, TableHead, TableRow, TableBody, Button } from '@material-ui/core';
 import axios from 'axios';
-import { moduleList, programmeDataUrl } from '../../api/api';
+import { moduleIdTime, programmeInfo } from '../../api/api';
 import './Programme.css';
 
 function Programme() {
@@ -12,24 +12,37 @@ function Programme() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 获取模块数据
-    axios.get(moduleList) 
+    axios.get(moduleIdTime) 
+    .then(response => {
+      if (response.data.code === 200) {
+        const moduleData = {
+          moduleId: response.data.obj.moudleId,
+          moduleName: response.data.obj.moudleName,
+          StartTime: response.data.obj.date,
+          EndTime: response.data.obj.endTime,
+        };
+        setStudentModules(prevModules => [...prevModules, moduleData]);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching module data:', error);
+    });
+  
+    // 获取programme和description数据
+    axios.get(programmeInfo) 
       .then(response => {
-        setStudentModules(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching modules:', error);
-      });
-
-    // 获取程序名称和描述数据
-    axios.get(programmeDataUrl) 
-      .then(response => {
-        setProgrammeData(response.data);
+        if (response.data.code === 200) {
+          setProgrammeData({
+            name: response.data.obj.programmeName,
+            description: response.data.obj.description
+          });
+        }
       })
       .catch(error => {
         console.error('Error fetching programme data:', error);
       });
   }, []);
+  
 
   return (
     <div className='container' id='Programme'>
@@ -50,6 +63,7 @@ function Programme() {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
+                  <TableCell>Module ID</TableCell>
                   <TableCell>Module</TableCell>
                   <TableCell align="right">StartTime</TableCell>
                   <TableCell align="right">EndTime</TableCell>
@@ -58,7 +72,8 @@ function Programme() {
               <TableBody>
                 {studentModules.map((module, index) => (
                   <TableRow key={index}>
-                  <TableCell component="th" scope="row" className="gFont">{module.module}</TableCell>
+                  <TableCell component="th" scope="row" className="gFont">{module.moduleId}</TableCell>
+                  <TableCell component="th" scope="row" className="gFont">{module.moduleName}</TableCell>
                   <TableCell align="right" className="gFont">{module.StartTime}</TableCell>
                   <TableCell align="right" className="gFont">{module.EndTime}</TableCell>
                   </TableRow>

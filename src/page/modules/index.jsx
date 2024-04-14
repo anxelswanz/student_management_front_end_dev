@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {moduleIdInfo} from '../../api/api';
 
 function Modules() {
   const [list, setList] = useState([]);
@@ -17,38 +18,21 @@ function Modules() {
   const tableBoxRef = useRef(null);
 
   useEffect(() => {
-    axios.get('http://localhost:3000/api/modules')
+    axios.get(moduleIdInfo)
       .then(response => {
-        const moduleIds = response.data;
-        const detailsPromises = moduleIds.map(module =>
-          axios.get(`http://localhost:3000/api/modules/${module.id}`)
-        );
-        const overviewPromises = moduleIds.map(module =>
-          axios.get(`http://localhost:3000/api/modules/${module.id}/overview`)
-        );
-        const syllabusPromises = moduleIds.map(module =>
-          axios.get(`http://localhost:3000/api/modules/${module.id}/syllabus`)
-        );
-
-        return Promise.all([
-          Promise.all(detailsPromises),
-          Promise.all(overviewPromises),
-          Promise.all(syllabusPromises)
-        ]);
-      })
-      .then(([detailsResponses, overviewResponses, syllabusResponses]) => {
-        const modules = detailsResponses.map((detailsResponse, index) => {
-          return {
-            ...detailsResponse.data,
-            overview: overviewResponses[index].data.overview,
-            syllabus: syllabusResponses[index].data.syllabus
-          };
-        });
-        setList(modules);
-        refsdata.current = modules.map((_, i) => refsdata.current[i] ?? React.createRef());
+        if (response.data.code === 200) {
+          const modulesData = response.data.obj.map(module => ({
+            moduleId: module.moudleId,
+            moduleName: module.moudleName,
+            credits: module.credits,
+            overview: module.overview,
+          }));
+          setList(modulesData); 
+        }
       })
       .catch(error => console.error('Error fetching module data:', error));
   }, []);
+  
 
   const handleButtonClick = (index) => {
     const updatedList = list.map((item, idx) =>
@@ -86,7 +70,7 @@ function Modules() {
                   color="primary"
                   onClick={() => { handleButtonClick(i); }}
                 >
-                  ID:{ele.id}
+                  ID:{ele.moduleId}
                 </Button>
               ))}
             </div>
@@ -108,7 +92,7 @@ function Modules() {
                   <Fragment key={i}>
                     <TableRow id={`line${i}`}>
                       <TableCell component="th" scope="row" ref={refsdata.current[i]}>
-                        {item.module}
+                        {item.moduleName}
                       </TableCell>
                       <TableCell align="center">{item.credits}</TableCell>
                       <TableCell align="center">
@@ -132,12 +116,7 @@ function Modules() {
                               {item.overview}
                             </Typography>
                             <Divider style={{ margin: '32px 0' }} />
-                            <Typography variant="subtitle1" display="block">
-                              Syllabus
-                            </Typography>
-                            <Typography variant="body1" display="block" style={{ whiteSpace: 'pre-line' }}>
-                              {item.syllabus}
-                            </Typography>
+                           
                           </Box>
                         </Collapse>
                       </TableCell>

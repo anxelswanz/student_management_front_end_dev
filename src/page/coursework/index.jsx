@@ -3,6 +3,7 @@ import axios from 'axios';
 import LeftBar from './../../component/leftbar/leftbar';
 import './coursework.css';
 import { Button, TextField, Divider } from '@material-ui/core';
+import { moduleName,uploadCoursework } from '../../api/api';
 
 function CourseWork() {
   const [modules, setModules] = useState([]);
@@ -12,22 +13,42 @@ function CourseWork() {
 
 
   useEffect(() => {
-    // 定义异步函数来获取数据
-    const fetchCourseWork = async () => {
-      try {
-        // 使用axios从您的后端API获取数据
-        const response = await axios.get('http://localhost:3001/api/coursework');
-        setModules(response.data);
-      } catch (error) {
-        // 错误处理
-        console.error("Error fetching data: ", error);
-        alert('获取数据失败');
-      }
-    };
+    // 获取模块信息
+    axios.get(moduleName)
+      .then(response => {
+        if (response.data.code === 200) {
+          // 转换数据格式并设置模块状态
+          const fetchedModules = response.data.obj.map(mod => ({
+            moduleId: mod.moduleId,
+            moduleName: mod.moduleName
+          }));
+          setModules(fetchedModules);
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching module data:', error);
+      });
 
-    fetchCourseWork();
-  }, []); // 依赖数组为空表示此effect在组件挂载时运行一次
+    // 获取课程作业时间
+    axios.get('/api/student/courseworkTime')
+      .then(response => {
+        if (response.data.code === 200) {
+          const courseworkTimes = response.data.obj.map(course => ({
+            startTime: course.releaseTime,
+            endTime: course.endTime
+          }));
+          setModules(prevModules => prevModules.map((mod, index) => ({
+            ...mod,
+            ...courseworkTimes[index]
+          })));
+        } 
+      })
+      .catch(error => {
+        console.error('Error fetching coursework times:', error);
+      });
+  }, []);
 
+  
   // 文件上传处理函数
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -50,6 +71,26 @@ function CourseWork() {
     // 这里添加提交逻辑，使用 axios 发送数据到后端
   };
 
+  // 创建一个 FormData 对象用于组合要提交的数据
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('text', text); 
+  // 使用 axios 发送 FormData
+  axios.post(uploadCoursework, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+  .then(response => {
+    console.log('提交成功:', response.data);
+    alert('作业提交成功！');
+  })
+  .catch(error => {
+    console.error('提交失败:', error);
+    alert('作业提交失败，请重试！');
+  });
+
+
   return (
     <div className='container' id='coursework'>
       <div className='leftbox'>
@@ -62,13 +103,13 @@ function CourseWork() {
             <div className='fn-clear'>
               {modules.map((module, index) => (
                 <Button
-                  key={module.id}
+                  key={module.moduleId}
                   size="small"
                   variant="contained"
                   color="primary"
                   onClick={() => setCurrentModuleIndex(index)}
                 >
-                  ID:{module.id}
+                  ID:{module.moduleId} Name:{module.moduleName}
                 </Button>
               ))}
             </div>
