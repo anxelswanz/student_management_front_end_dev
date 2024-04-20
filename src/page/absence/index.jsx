@@ -1,24 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import LeftBar from '../../component/leftbar/leftbar';
 import { Button } from '@material-ui/core';
 import './absence.css';
+import axios from 'axios';
+import { findEmail } from '../../api/api';
 
 function Absence() {
-  // 初始化邮件列表
-  const emails = [
-    'email1@example.com',
-    'email2@example.com',
-    'email3@example.com',
-    'email4@example.com',
-    'email5@example.com',
-    'email6@example.com',
-    'email7@example.com',
-    'email8@example.com',
-    'email9@example.com',
-    'email10@example.com',
-  ];
-  // 使用useState跟踪当前选中的邮件索引
+  // 使用useState跟踪邮件列表和当前选中的邮件索引
+  const [emails, setEmails] = useState([]);
   const [currentEmailIndex, setCurrentEmailIndex] = useState(0);
+
+  useEffect(() => {
+    // 获取邮件数据的函数
+    const fetchEmails = () => {
+      axios.get(findEmail)  
+        .then(response => {
+          if (response.data.code === 200 && response.data.obj) {
+            setEmails(prevEmails => [...prevEmails, { moduleId: response.data.obj.moudleId, email: response.data.obj.email }]);
+          }
+        })
+        .catch(error => {
+          console.error('获取邮件数据失败:', error);
+        });
+    };
+
+    fetchEmails();
+  }, []);
 
   return (
       <div className='container' id='absence'>
@@ -30,7 +37,7 @@ function Absence() {
             <div className='topMain'>
               <h2 className='gFont'>Module</h2>
               <div className='fn-clear'>
-                {emails.map((_, i) => (
+              {emails.map((email, i) => (
                   // 遍历邮件列表，生成按钮
                     <Button
                         key={i}
@@ -39,7 +46,7 @@ function Absence() {
                         color="primary"
                         onClick={() => setCurrentEmailIndex(i)}
                     >
-                      ID:{i + 1}
+                      ID:{email.moduleId}
                     </Button>
                 ))}
               </div>
@@ -54,12 +61,12 @@ function Absence() {
                   <Button
                       size="small"
                       onClick={() => {
-                        window.location.href = `mailto:${emails[currentEmailIndex]}`;
+                        window.location.href = `mailto:${emails[currentEmailIndex]?.email}`;
                       }}
                       variant="contained"
                       color="secondary"
                   >
-                    {emails[currentEmailIndex]}
+                    {emails[currentEmailIndex]?.email}
                   </Button>
                 </p>
               </div>
@@ -67,9 +74,12 @@ function Absence() {
           </div>
           <div className='tipbox'>
             <h2 className='gFont'>Warning</h2>
-            <p className='desc'>
-              xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-            </p>
+            <div className='desc'>
+                <p>It is imperative that you carefully manage your study and rest time to ensure that while you pursue academic achievements, you also take proper care of your health. If it becomes necessary to take a leave due to health or other emergency reasons, we remind you to follow the school's leave procedures and include the appropriate documentation in your leave request email. This helps us process your request more effectively and ensures it complies with school policies.</p>
+                <p>Furthermore, we emphasize the importance of keeping up with your course progress. Try to anticipate and avoid situations that may lead to absences, ensuring that you do not miss out on important teaching content and learning opportunities. If absences are unavoidable, please communicate promptly with your course instructors to seek remedial measures so as not to affect your academic performance.</p>
+                <p>Thank you for your understanding and cooperation. We look forward to each student achieving a balance between health and academics and completing their studies successfully.</p>
+            </div>
+
           </div>
         </div>
       </div>

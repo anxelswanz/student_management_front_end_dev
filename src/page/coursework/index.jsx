@@ -3,7 +3,7 @@ import axios from 'axios';
 import LeftBar from './../../component/leftbar/leftbar';
 import './coursework.css';
 import { Button, TextField, Divider } from '@material-ui/core';
-import { moduleName,uploadCoursework } from '../../api/api';
+import { moduleName,uploadCoursework, courseworkTime } from '../../api/api';
 
 function CourseWork() {
   const [modules, setModules] = useState([]);
@@ -13,11 +13,10 @@ function CourseWork() {
 
 
   useEffect(() => {
-    // 获取模块信息
+    // 获取module信息
     axios.get(moduleName)
       .then(response => {
         if (response.data.code === 200) {
-          // 转换数据格式并设置模块状态
           const fetchedModules = response.data.obj.map(mod => ({
             moduleId: mod.moduleId,
             moduleName: mod.moduleName
@@ -30,7 +29,7 @@ function CourseWork() {
       });
 
     // 获取课程作业时间
-    axios.get('/api/student/courseworkTime')
+    axios.get(courseworkTime)
       .then(response => {
         if (response.data.code === 200) {
           const courseworkTimes = response.data.obj.map(course => ({
