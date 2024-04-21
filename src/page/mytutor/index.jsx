@@ -64,9 +64,17 @@ function MyTutor() {
             </Grid>
             <Grid item xs={2}>
               {/* 显示联系导师的按钮 */}
-              <Button size="small" onClick={() => {
-                window.location.href = `mailto:${selectedTutor?.email}`;
-              }} variant="contained" color="secondary">Contact</Button>
+              <Button 
+                  size="small" 
+                  onClick={() => {
+                    window.location.href = `mailto:${selectedTutor?.email}`;
+                  }} 
+                  variant="contained" 
+                  color="secondary"
+                  title="通过电子邮件联系导师" // 添加悬停提示
+                >
+                  Contact
+              </Button>
             </Grid>
           </Grid>
         </div>

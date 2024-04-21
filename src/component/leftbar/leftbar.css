@@ -1,9 +1,28 @@
+/* General styles */
 #leftbar {
   background-color: #06038D;
   color: white;
   height: 100%;
+  position: relative;
+  transition: width 0.3s ease;
 }
 
+.toggle-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.toggle-button.hidden {
+  color: black;
+}
+
+/* Logo styles */
 #leftbar .logo {
   width: 80%;
   padding: 30px 0;
@@ -11,34 +30,79 @@
   margin: auto;
   background-color: #06038D;
 }
+
+/* Topbox styles */
 #leftbar .topbox {
-  background-color: #06038D; 
+  background-color: #06038D;
 }
+
 #leftbar .topbox .MuiCardContent-root {
-  color: white; 
+  color: white;
 }
+
 #leftbar .topbox p {
   color: rgb(138, 135, 153);
 }
 
-
-
+/* Navigation box styles */
 #leftbar .navbox {
-  padding-top: 20px; 
+  padding-top: 20px;
 }
+
 #leftbar .navbox a {
   line-height: 40px;
+  padding: 18px 20px;
+
 }
-#leftbar .navbox i {
-  color: #f9f9f9;
-  font-size: 20px;
-  display: inline-block;
-  margin-right: 20px;
-}
+
 #leftbar .navbox .sure {
   background-color: #2196f3;
   color: #f4f4f4;
+
 }
+
 #leftbar .navbox .sure i {
   color: #f4f4f4;
+  margin-right: 15px; 
 }
+#leftbar .navbox .iconfont {
+  margin-right: 10px; 
+  color: #f9f9f9;
+  font-size: 20px;
+  display: inline-block;
+}
+
+
+/* Collapsed state styles */
+#leftbar.collapsed {
+  width: 50px; 
+}
+
+#leftbar.collapsed .logo {
+  display: none;
+}
+
+#leftbar.collapsed .navbox {
+  display: none; 
+}
+
+#leftbar.collapsed .toggle-button {
+  left: 5px;
+}
+#leftbar .navbox a.spaced {
+  margin-right: 35px;
+}
+
+@media screen and (max-width: 600px) {
+  #leftbar .topbox {
+    display: none;
+  }
+  #leftbar .navbox {
+    padding-top: 50px;
+  }
+  #leftbar .navbox a {
+    line-height: 20px;
+    padding: 12px 20px;
+  }
+}
+

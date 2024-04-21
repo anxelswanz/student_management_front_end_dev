@@ -17,7 +17,7 @@ import {
   Menu, MenuItem
 } from '@material-ui/core';
 import './myprograme.css';
-// 页签切换
+
 function TabPanel (props) {
   const { children, value, index, ...other } = props;
 

@@ -6,7 +6,8 @@
   align-items: center;
   justify-items: center;
   flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
+  
 }
 #Programme .maincenter .topline {
   min-height: 140px;
@@ -53,4 +54,35 @@
 }
 #Programme .btnline button {
   margin: 0 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  #Programme h2 {
+      font-size: 24px;
+  }
+  #Programme .maincenter {
+      flex-direction: column;
+      align-items: stretch;
+  }
+  #Programme .maincenter .topline {
+      min-height: 100px;
+  }
+  #Programme .maincenter .topline .topMain {
+      padding: 10px;
+  }
+  #Programme .maincenter .mainList {
+      padding: 5px;
+  }
+  #Programme .mainList .tablebox {
+      overflow-x: auto;
+  }
+  table {
+      display: block;
+  }
+  #Programme .btnline button {
+      margin: 5px 5px;
+      padding: 12px;
+      font-size: 10px;
+  }
 }

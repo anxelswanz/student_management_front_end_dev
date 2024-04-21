@@ -24,7 +24,6 @@ ReactDOM.render(
         <Route path="/Absence" element={<Absence />} />
         <Route path="/Mytutor" element={<Mytutor />} />
         <Route path="/Myprograme" element={<Myprograme />} />
-        {/* 页面不存在时候显示的内容 */}
         <Route
           path="*"
           element={

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './leftbar.css';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -9,47 +9,42 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import logo from '../../assets//logo.png';
 
-
-
-
-function LeftBar (props) {
+function LeftBar(props) {
   const [selectedIndex, setSelectedIndex] = useState(props.tabNav);
+  const [isExpanded, setExpanded] = useState(true);  // State to toggle sidebar visibility
 
-// 创建一个自定义的链接组件 CustomLink，用于在左侧边栏中实现跳转链接
   const CustomLink = React.forwardRef((props, ref) => {
     return <Link ref={ref} {...props} />;
   });
 
-// 监听tabNav的变化，当变化时，更新selectedIndex
   useEffect(() => {
-    console.log(props.tabNav)
-    setSelectedIndex(props.tabNav)
+    console.log(props.tabNav);
+    setSelectedIndex(props.tabNav);
   }, [props.tabNav]);
 
-  // 渲染左侧边栏组件
-  return (
-    <div id='leftbar'>
+  
 
-      {/* 渲染顶部 */}
-      <Card variant="outlined" className='topbox'>
+  return (
+    <div id='leftbar' className={isExpanded ? 'expanded' : 'collapsed'}>
+      <button className="toggle-button" onClick={() => setExpanded(!isExpanded)}>
+        {isExpanded ? '<' : '>'}  {/* Change icon based on state */}
+      </button>
+
+      <Card variant="outlined" className={isExpanded ? 'topbox' : 'topbox hidden'}>
         <CardContent>
           <img className='logo' src={logo} alt="logo" />
-            <Typography className='details' gutterBottom>
-              Student Name:xxx
-            </Typography>
-            <Typography className='details' gutterBottom>
-               Student ID:xxx
-            </Typography>
-            <Typography className='details' >
-               Year:xxx
-            </Typography>
-          </CardContent>
-        </Card>
+          {isExpanded && (
+            <>
+              <Typography className='details' gutterBottom>Student Name:xxx</Typography>
+              <Typography className='details' gutterBottom>Student ID:xxx</Typography>
+              <Typography className='details'>Year:xxx</Typography>
+            </>
+          )}
+        </CardContent>
+      </Card>
 
-
-      {/* 渲染导航栏 */}
       <Divider />
-      <List className='navbox'>
+      <List className={isExpanded ? 'navbox' : 'navbox collapsed'}>
         <ListItem button component={CustomLink} className={selectedIndex === 'Programme' || selectedIndex === '' ? 'sure' : ''} to="/Programme">
           <i className='iconfont icon-tianjiajihua'></i>
           Programme
@@ -88,4 +83,5 @@ function LeftBar (props) {
     </div>
   );
 }
+
 export default LeftBar;
