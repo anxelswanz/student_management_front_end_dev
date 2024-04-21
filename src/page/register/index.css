@@ -1,0 +1,48 @@
+.register {
+    background: url('src/assets/background2.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* 超小设备的样式 */
+    @media (max-width: 599px) {
+        height: 100vh;
+    }
+
+    /* 小型设备（平板等） */
+    @media (min-width: 600px) and (max-width: 1199px) {
+        height: 75vh;
+    }
+
+    /* 中型设备（桌面等） */
+    @media (min-width: 1200px) {
+        height: 100vh;
+    }
+
+    
+}
+
+.grid {
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.paper{
+    margin-top: 8px;
+    padding: 24px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 0;  
+}
+
+.button {
+    background: '#06038D' !important;
+    &:hover {
+        background-color: '#050372' ;
+    }
+}
