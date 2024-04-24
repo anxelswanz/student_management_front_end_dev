@@ -3,57 +3,44 @@ import LeftBar from '../../component/leftbar/leftbar';
 import { Button } from '@material-ui/core';
 import './exam.css';
 import axios from 'axios';
-import { examInfo, examMark } from '../../api/api';
+import { moduleExamInfo } from '../../api/api';
 
 function Exam() {
   const [modules, setModules] = useState([]);
   const [currentModule, setCurrentModule] = useState(null);
-  const [mark, setMark] = useState(null);
+
 
   useEffect(() => {
     const fetchExamDetails = () => {
-      axios.get(examInfo)
+      axios.get(moduleExamInfo)
         .then(response => {
           if (response.data.code === 200) {
-            const fetchedModules = [{
-              moduleId: response.data.obj.moduleId,
-              moduleName: response.data.obj.moduleName, 
-              startTime: response.data.obj.examStartTime,
-              endTime: response.data.obj.examEndTime,
-              duration: response.data.obj.examDuration, 
+            const fetchedModules = response.data.obj.map(module => ({
+              moduleId: module.moduleId,
+              moduleName: module.moduleName,
+              startTime: module.examStartTime,
+              endTime: module.examEndTime,
+              duration: module.examDuration,
+              date: module.examDate,
+              site: module.examSite
 
-            }];
+            }));
             setModules(fetchedModules);
-            setCurrentModule(fetchedModules[0]);
+            if (fetchedModules.length > 0) {
+              setCurrentModule(fetchedModules[0]); // 默认选中第一个模块
+            }
           }
         })
         .catch(error => {
           console.error('获取考试详情失败:', error);
         });
     };
+    
 
     // 调用获取考试模块数据的函数
     fetchExamDetails();
 
-
-      // 调用获取考试模块数据的函数
-      fetchExamDetails();
-
-      // 获取考试成绩数据的函数
-      const fetchExamMark = () => {
-        axios.get(examMark)
-          .then(response => {
-            if (response.data.code === 200 && response.data.obj) {
-              setMark(response.data.obj[0]);
-            }
-          })
-          .catch(error => {
-            console.error('获取考试成绩失败:', error);
-          });
-      };
-  
-      // 调用获取考试成绩数据的函数
-      fetchExamMark();
+     
     }, []);
 
   return (
@@ -74,7 +61,7 @@ function Exam() {
                     color="primary"
                     onClick={() => setCurrentModule(module)}
                   >
-                    ID:{module.moduleId}
+                    {module.moduleId} {module.moduleName}
                   </Button>
                 ))}
               </div>
@@ -85,18 +72,18 @@ function Exam() {
               <div className='leftbox'>
                 <h2 className='gFont'>{currentModule?.moduleName}</h2>
                 <p className='timesline'>
-                  开始时间：{currentModule?.startTime}
+                  Date：{currentModule?.date}
                   <br />
-                  结束时间：{currentModule?.endTime}
+                  Start Time：{currentModule?.startTime}
                   <br />
-                  持续时间：{currentModule?.duration}
+                  End Time：{currentModule?.endTime}
+                  <br />
+                  Duration：{currentModule?.duration}
+                  <br />    
+                  Site: {currentModule?.site}
                 </p>
               </div>
-              <div className='righttxt'>
-                分数：
-                <br />
-                <span className='gFont'>{mark}</span>
-              </div>
+             
             </div>
           </div>
           <div className='tipbox'>

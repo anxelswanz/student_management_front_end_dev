@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../component/leftbar/leftbar';
 import { TableCell, Paper, TableContainer, Table, TableHead, TableRow, TableBody, Button } from '@material-ui/core';
 import axios from 'axios';
-import { moduleIdTime, programmeInfo } from '../../api/api';
+import { moduleIdList, moduleTime, programmeName, programmeDes} from '../../api/api';
 import './Programme.css';
 
 function Programme() {
@@ -12,35 +12,69 @@ function Programme() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(moduleIdTime) 
-    .then(response => {
-      if (response.data.code === 200) {
-        const moduleData = {
-          moduleId: response.data.obj.moudleId,
-          moduleName: response.data.obj.moudleName,
-          StartTime: response.data.obj.date,
-          EndTime: response.data.obj.endTime,
-        };
-        setStudentModules(prevModules => [...prevModules, moduleData]);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching module data:', error);
-    });
-  
-    // 获取programme和description数据
-    axios.get(programmeInfo) 
+    // Fetching list of module IDs
+    const fetchModuleIds = () => {
+      axios.get(moduleIdList)
+        .then(response => {
+          if (response.data.code === 200 && Array.isArray(response.data.obj)) {
+            const moduleIds = response.data.obj;
+            fetchModuleDetails(moduleIds);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching module IDs:', error);
+        });
+    };
+
+    // Fetching details for each module
+    const fetchModuleDetails = (moduleIds) => {
+      moduleIds.forEach(moduleId => {
+        axios.get(moduleTime, { params: { moduleId } })
+          .then(response => {
+            if (response.data.code === 200 && response.data.obj && response.data.obj.length > 0) {
+              const moduleDetails = {
+                moduleId,
+                moduleName: response.data.obj[0].moduleName,
+                StartTime: response.data.obj[0].date,
+                EndTime: response.data.obj[0].endTime
+              };
+              setStudentModules(prevModules => [...prevModules, moduleDetails]);
+              console.log(moduleId);
+            }
+          })
+          .catch(error => console.error(`Error fetching details for module ${moduleId}:`, error));
+      });
+    };
+
+    // Fetching programme name
+    axios.get(programmeName)
       .then(response => {
-        if (response.data.code === 200) {
-          setProgrammeData({
-            name: response.data.obj.programmeName,
-            description: response.data.obj.description
-          });
+        if (response.data.code === 200 && Array.isArray(response.data.obj) && response.data.obj.length > 0) {
+          setProgrammeData(prevData => ({
+            ...prevData,
+            name: response.data.obj[0]
+          }));
         }
       })
       .catch(error => {
-        console.error('Error fetching programme data:', error);
+        console.error('Error fetching programme name:', error);
       });
+
+    // Fetching programme description
+    axios.get(programmeDes)
+      .then(response => {
+        if (response.data.code === 200 && Array.isArray(response.data.obj) && response.data.obj.length > 0) {
+          setProgrammeData(prevData => ({
+            ...prevData,
+            description: response.data.obj[0]
+          }));
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching programme description:', error);
+      });
+
+    fetchModuleIds();
   }, []);
   
 
@@ -54,11 +88,11 @@ function Programme() {
           <div className='topMain'>
             {/* 渲染程序名称和描述 */}
             <h2 className='gFont'>{programmeData.name}</h2>
-            <p>{programmeData.description}</p>
+            <p class="description">{programmeData.description}</p>
+
           </div>
         </div>
         <div className='mainList'>
-          <h2 className='gFont'>Module List</h2>
           <TableContainer component={Paper} className='tablebox'>
             <Table aria-label="simple table">
               <TableHead>
@@ -66,7 +100,7 @@ function Programme() {
                   <TableCell>Module ID</TableCell>
                   <TableCell>Module</TableCell>
                   <TableCell align="right">StartTime</TableCell>
-                  <TableCell align="right">EndTime</TableCell>
+                  <TableCell align="right">Duration</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

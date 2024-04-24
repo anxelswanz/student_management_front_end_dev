@@ -3,91 +3,119 @@ import axios from 'axios';
 import LeftBar from './../../component/leftbar/leftbar';
 import './coursework.css';
 import { Button, TextField, Divider } from '@material-ui/core';
-import { moduleName,uploadCoursework, courseworkTime } from '../../api/api';
+import { moduleName, courseworkTime, moduleIdList, courseworkMark, uploadCoursework, programmeName } from '../../api/api';
 
 function CourseWork() {
   const [modules, setModules] = useState([]);
   const [currentModuleIndex, setCurrentModuleIndex] = useState(0);
   const [file, setFile] = useState(null);
   const [text, setText] = useState('');
-
+  const [programName, setProgramName] = useState('');
 
   useEffect(() => {
-    // 获取module信息
-    axios.get(moduleName)
-      .then(response => {
-        if (response.data.code === 200) {
-          const fetchedModules = response.data.obj.map(mod => ({
-            moduleId: mod.moduleId,
-            moduleName: mod.moduleName
-          }));
-          setModules(fetchedModules);
+    // 请求获取programme名称
+    axios.get(programmeName)
+    .then(response => {
+      if (response.status === 200 && response.data && response.data.code === 200) {
+        setProgramName(response.data.obj);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching program name:', error);
+      setProgramName('Failed to fetch program name');
+    });
+  }, []);
+
+  useEffect(() => {
+    // 获取moduleid
+    axios.get(moduleIdList)
+      .then(idResponse => {
+        if (idResponse.data.code === 200) {
+          const fetchedModuleIds = idResponse.data.obj.map(id => ({ moduleId: id }));
+          // 获取modulename
+          return axios.get(moduleName)
+            .then(nameResponse => {
+              if (nameResponse.data.code === 200) {
+                const combinedModules = fetchedModuleIds.map((mod, index) => ({
+                  ...mod,
+                  moduleName: nameResponse.data.obj[index] // 结合模块名称
+                }));
+                return combinedModules;
+              }
+            })
+            .then(combinedModules => {
+              // 获取作业时间信息
+              return axios.get(courseworkTime)
+                .then(timeResponse => {
+                  if (timeResponse.data.code === 200) {
+                    const times = timeResponse.data.obj;
+                    combinedModules.forEach((mod, index) => {
+                      mod.startTime = times[index].releaseTime;
+                      mod.endTime = times[index].deadLine;
+                    });
+                    return combinedModules;
+                  }
+                })
+            })
+            .then(combinedModules => {
+              // 获取作业分数信息
+              return axios.get(courseworkMark)
+                .then(markResponse => {
+                  if (markResponse.data.code === 200) {
+                    const marks = markResponse.data.obj;
+                    const updatedModules = combinedModules.map((mod, index) => ({
+                      ...mod,
+                      mark: marks[index]
+                    }));
+                    setModules(updatedModules); // 更新状态变量
+                  }
+                });
+            });
         }
       })
       .catch(error => {
         console.error('Error fetching module data:', error);
       });
-
-    // 获取课程作业时间
-    axios.get(courseworkTime)
-      .then(response => {
-        if (response.data.code === 200) {
-          const courseworkTimes = response.data.obj.map(course => ({
-            startTime: course.releaseTime,
-            endTime: course.endTime
-          }));
-          setModules(prevModules => prevModules.map((mod, index) => ({
-            ...mod,
-            ...courseworkTimes[index]
-          })));
-        } 
-      })
-      .catch(error => {
-        console.error('Error fetching coursework times:', error);
-      });
   }, []);
-
   
-  // 文件上传处理函数
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile && selectedFile.type === 'application/zip') {
-      setFile(selectedFile);
-    } else {
-      alert('请上传zip压缩包文件');
-    }
-  };
+      // 文件上传处理函数
+      const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile && selectedFile.type === 'application/zip') {
+          setFile(selectedFile);
+        } else {
+          alert('请上传zip压缩包文件');
+        }
+      };
 
-  // 文本内容输入框处理函数
-  const handleTextChange = (e) => {
-    setText(e.target.value);
-  };
+      // 文本内容输入框处理函数
+      const handleTextChange = (e) => {
+        setText(e.target.value);
+      };
 
-  // 提交表单处理函数
-  const handleSubmit = () => {
-    console.log('文件:', file);
-    console.log('文本内容:', text);
-    // 这里添加提交逻辑，使用 axios 发送数据到后端
-  };
+      // 提交表单处理函数
+      const handleSubmit = () => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('text', text); 
 
-  // 创建一个 FormData 对象用于组合要提交的数据
-  const formData = new FormData();
-  formData.append('file', file);
-  formData.append('text', text); 
-  // 使用 axios 发送 FormData
-  axios.post(uploadCoursework, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  })
-  .then(response => {
-    console.log('提交成功:', response.data);
-    alert('作业提交成功！');
-  })
-  .catch(error => {
-    console.error('提交失败:', error);
-    alert('作业提交失败，请重试！');
-  });
+        axios.post(uploadCoursework, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+          if(response.data.code === 200) {
+            alert('作业提交成功！');
+          } else {
+            throw new Error('提交错误');
+          }
+        })
+        .catch(error => {
+          console.error('提交失败:', error);
+          alert('作业提交失败，请重试！');
+        });
+      };
 
 
   return (
@@ -98,7 +126,7 @@ function CourseWork() {
       <div className='maincenter'>
         <div className='topline'>
           <div className='topMain'>
-            <h2 className='gFont'>Module</h2>
+            <h2 className='gFont'>{programName}</h2>
             <div className='fn-clear'>
               {modules.map((module, index) => (
                 <Button
@@ -108,7 +136,7 @@ function CourseWork() {
                   color="primary"
                   onClick={() => setCurrentModuleIndex(index)}
                 >
-                  ID:{module.moduleId} Name:{module.moduleName}
+                  {module.moduleId} {module.moduleName}
                 </Button>
               ))}
             </div>
@@ -117,20 +145,16 @@ function CourseWork() {
         <Divider />
         <div className='centerbox'>
           {modules.length > 0 && (
-            <>
-              <div className='btn-group'>
-                <div className='leftbox'>
-                  <h2 className='gFont'>{modules[currentModuleIndex].name}</h2>
-                  <p className='timesline'>
-                    开始时间：{modules[currentModuleIndex].startTime} 结束时间：{modules[currentModuleIndex].endTime}
-                  </p>
-                </div>
-                <div className='righttxt'>
-                  分数：<br />
-                  <span className='gFont'>{modules[currentModuleIndex].score}</span>
-                </div>
+            <div className='btn-group'>
+              <div className='leftbox'>
+                <h2 className='gFont'>{modules[currentModuleIndex].moduleName}</h2>
+                <p>
+                  Release Time：{modules[currentModuleIndex].startTime}，</p>
+                  <p> End Time：{modules[currentModuleIndex].endTime}
+                </p>
+
               </div>
-            </>
+            </div>
           )}
         </div>
         <div className='mainList'>

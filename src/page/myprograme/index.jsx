@@ -31,7 +31,6 @@ function TabPanel (props) {
     >
       {value === index && (
         <Box p={3}>
-          {/*  */}
           {children}
         </Box>
       )}
@@ -56,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
 }));
-function Myprograme () {
+function AcademicHistory () {
   useStyles();
 // 下拉菜单
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -115,9 +114,9 @@ function Myprograme () {
                   <TableRow>
                     <TableCell align="center">ID</TableCell>
                     <TableCell align="center">Module Name</TableCell>
-                    <TableCell align="center">start time</TableCell>
-                    <TableCell align="center">end time</TableCell>
-                    <TableCell align="center">grade</TableCell>
+                    <TableCell align="center">Coursework Mark(40%)</TableCell>
+                    <TableCell align="center">Exam Mark(60%)</TableCell>
+                    <TableCell align="center">Final Mark</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -178,9 +177,9 @@ function Myprograme () {
                     <TableRow>
                       <TableCell align="center">ID</TableCell>
                       <TableCell align="center">Module Name</TableCell>
-                      <TableCell align="center">start time</TableCell>
-                      <TableCell align="center">end time</TableCell>
-                      <TableCell align="center">grade</TableCell>
+                    <TableCell align="center">Coursework Mark(40%)</TableCell>
+                    <TableCell align="center">Exam Mark(60%)</TableCell>
+                    <TableCell align="center">Final Mark</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -357,10 +356,9 @@ function Myprograme () {
                   <TableRow>
                     <TableCell align="center">ID</TableCell>
                     <TableCell align="center">Module Name</TableCell>
-                    <TableCell align="center">start time</TableCell>
-                    <TableCell align="center">end time</TableCell>
-                    <TableCell align="center">grade</TableCell>
-                    <TableCell align="center">opration</TableCell>
+                    <TableCell align="center">Coursework Mark(40%)</TableCell>
+                    <TableCell align="center">Exam Mark(60%)</TableCell>
+                    <TableCell align="center">Final Mark</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -403,10 +401,9 @@ function Myprograme () {
                   <TableRow>
                     <TableCell align="center">ID</TableCell>
                     <TableCell align="center">Module Name</TableCell>
-                    <TableCell align="center">start time</TableCell>
-                    <TableCell align="center">end time</TableCell>
-                    <TableCell align="center">grade</TableCell>
-                    <TableCell align="center">opration</TableCell>
+                    <TableCell align="center">Coursework Mark(40%)</TableCell>
+                    <TableCell align="center">Exam Mark(60%)</TableCell>
+                    <TableCell align="center">Final Mark</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -444,4 +441,4 @@ function Myprograme () {
     </div>
   );
 }
-export default Myprograme;
+export default AcademicHistory;

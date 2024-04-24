@@ -16,7 +16,7 @@ function Absence() {
       axios.get(findEmail)  
         .then(response => {
           if (response.data.code === 200 && response.data.obj) {
-            setEmails(prevEmails => [...prevEmails, { moduleId: response.data.obj.moudleId, email: response.data.obj.email }]);
+            setEmails(response.data.obj);
           }
         })
         .catch(error => {

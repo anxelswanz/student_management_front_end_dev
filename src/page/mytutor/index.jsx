@@ -9,6 +9,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
+import { tutorInfo} from '../../api/api';
 
 //定义样式
 const useStyles = makeStyles((theme) => ({
@@ -20,22 +21,28 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
 }));
-
 function MyTutor() {
-  const classes = useStyles(); 
-  const [selectedTutor, setSelectedTutor] = useState(null); 
+  const classes = useStyles();
+  const [selectedTutor, setSelectedTutor] = useState(null);
 
   useEffect(() => {
-    // 使用 Axios 获取导师信息数据
-    axios.get('/api/student/tutorInfo')
-      .then(response => {
-        if (response.data.code === 200 && response.data.obj) {
-          setSelectedTutor(response.data.obj[0]); 
-        }
-      })
-      .catch(error => {
-        console.error('获取导师信息失败:', error);
-      });
+    const fetchTutorInfo = () => {
+      axios.get(tutorInfo)
+        .then(response => {
+          if (response.data.code === 200 && response.data.obj && response.data.obj.length > 0) {
+            // 假设只获取第一个导师信息
+            setSelectedTutor(response.data.obj[0]);
+          } else {
+            console.error('无导师信息数据或数据格式错误');
+          }
+        })
+        .catch(error => {
+          console.error('获取导师信息失败:', error);
+        });
+    };
+
+    // 调用获取导师信息数据的函数
+    fetchTutorInfo();
   }, []);
 
   return (
@@ -73,7 +80,7 @@ function MyTutor() {
                   color="secondary"
                   title="通过电子邮件联系导师" // 添加悬停提示
                 >
-                  Contact
+                 Bookings
               </Button>
             </Grid>
           </Grid>

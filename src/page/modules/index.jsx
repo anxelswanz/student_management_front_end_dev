@@ -5,33 +5,87 @@ import { useNavigate } from 'react-router-dom';
 import './Modules.css';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
-  Button, IconButton, Collapse, Box, Divider, Typography
+  Button, IconButton, Collapse, Box,  Typography
 } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import {moduleIdInfo} from '../../api/api';
+import { moduleIdInfo, moduleIdCredits, moduleOverview, programmeName } from '../../api/api';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+
 
 function Modules() {
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const refsdata = useRef([]);
   const tableBoxRef = useRef(null);
+  const [programName, setProgramName] = useState([]);
 
   useEffect(() => {
+    // 请求获取programme名称
+    axios.get(programmeName, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 200 && response.data && response.data.code === 200) {
+        setProgramName(response.data.obj[0]);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching program name:', error);
+      setProgramName('Failed to fetch program name');
+    });
+  }, []);
+
+  useEffect(() => {
+    // Fetch module IDs and names
     axios.get(moduleIdInfo)
       .then(response => {
         if (response.data.code === 200) {
           const modulesData = response.data.obj.map(module => ({
-            moduleId: module.moudleId,
-            moduleName: module.moudleName,
-            credits: module.credits,
-            overview: module.overview,
+            moduleId: module.moduleId,
+            moduleName: module.moduleName,
           }));
-          setList(modulesData); 
+          fetchModuleCredits(modulesData);
         }
       })
-      .catch(error => console.error('Error fetching module data:', error));
+      .catch(error => console.error('Error fetching module IDs:', error));
   }, []);
+
+  
+
+
+  const fetchModuleCredits = (modulesData) => {
+    axios.get(moduleIdCredits)
+      .then(response => {
+        if (response.data.code === 200) {
+          const creditsData = response.data.obj;
+          const updatedModules = modulesData.map(module => ({
+            ...module,
+            credits: creditsData.find(credit => credit.moduleName === module.moduleName)?.credits || 'N/A',
+          }));
+          fetchModuleOverviews(updatedModules);
+        }
+      })
+      .catch(error => console.error('Error fetching module credits:', error));
+  };
+
+  const fetchModuleOverviews = (modulesData) => {
+    axios.get(moduleOverview)
+      .then(response => {
+        if (response.data.code === 200) {
+          const overviewData = response.data.obj;
+          const updatedModules = modulesData.map((module, index) => ({
+            ...module,
+            overview: overviewData[index] || 'No overview available',
+          }));
+          setList(updatedModules);
+        }
+      })
+      .catch(error => console.error('Error fetching module overview:', error));
+  };
+  
   
 
   const handleButtonClick = (index) => {
@@ -60,7 +114,7 @@ function Modules() {
       <div className='maincenter'>
         <div className='topline'>
           <div className='topMain'>
-            <h2 className='gFont'>Module</h2>
+          <h2 className='gFont'>{programName}</h2>
             <div className='fn-clear'>
               {list.map((ele, i) => (
                 <Button
@@ -70,7 +124,7 @@ function Modules() {
                   color="primary"
                   onClick={() => { handleButtonClick(i); }}
                 >
-                  ID:{ele.moduleId}
+                  {ele.moduleId}  {ele.moduleName}
                 </Button>
               ))}
             </div>
@@ -82,8 +136,8 @@ function Modules() {
             <Table aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Module</TableCell>
-                  <TableCell align="center">Credits</TableCell>
+                <TableCell className="boldAndLarge">Modules</TableCell>
+                  <TableCell align="center"></TableCell>
                   <TableCell align="center"></TableCell>
                 </TableRow>
               </TableHead>
@@ -92,9 +146,11 @@ function Modules() {
                   <Fragment key={i}>
                     <TableRow id={`line${i}`}>
                       <TableCell component="th" scope="row" ref={refsdata.current[i]}>
+                      <IconButton size="small">
+                          <StarBorderIcon />
+                        </IconButton>
                         {item.moduleName}
                       </TableCell>
-                      <TableCell align="center">{item.credits}</TableCell>
                       <TableCell align="center">
                         <IconButton aria-label="expand row" size="small" onClick={() => {
                           let updatedList = [...list];
@@ -104,6 +160,7 @@ function Modules() {
                           {item.open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                         </IconButton>
                       </TableCell>
+                     
                     </TableRow>
                     <TableRow>
                       <TableCell colSpan={3}>
@@ -115,12 +172,24 @@ function Modules() {
                             <Typography variant="body1" display="block">
                               {item.overview}
                             </Typography>
-                            <Divider style={{ margin: '32px 0' }} />
-                           
                           </Box>
                         </Collapse>
                       </TableCell>
-                    </TableRow>
+                    </TableRow> 
+                    <TableRow>
+                    <TableCell align="left">
+                        <Collapse in={item.open} timeout="auto" unmountOnExit>
+                          <Box margin={1}>
+                            <Typography variant="subtitle1" display="block">
+                              Credits
+                            </Typography>
+                            <Typography variant="body1" display="block">
+                              {item.credits}
+                            </Typography>
+                          </Box>
+                        </Collapse>
+                      </TableCell>
+                      </TableRow> 
                   </Fragment>
                 ))}
               </TableBody>

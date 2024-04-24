@@ -8,7 +8,7 @@ import CourseWork from './page/coursework/index'
 import Exam from './page/exam/index'
 import Absence from './page/absence/index'
 import Mytutor from './page/mytutor/index'
-import Myprograme from './page/myprograme/index'
+import AcademicHistory from './page/myprograme/index'
 
 ReactDOM.render(
 
@@ -23,7 +23,7 @@ ReactDOM.render(
         <Route path="/Exam" element={<Exam />} />
         <Route path="/Absence" element={<Absence />} />
         <Route path="/Mytutor" element={<Mytutor />} />
-        <Route path="/Myprograme" element={<Myprograme />} />
+        <Route path="/AcademicHistory" element={<AcademicHistory />} />
         <Route
           path="*"
           element={

@@ -57,7 +57,7 @@ function LeftBar(props) {
         <Divider />
         <ListItem button component={CustomLink} className={selectedIndex === 'CourseWork' ? 'sure' : ''} to="/CourseWork" >
           <i className='iconfont icon-zuoye'></i>
-          Course work
+          Coursework
         </ListItem>
         <Divider />
         <ListItem button component={CustomLink} className={selectedIndex === 'Exam' ? 'sure' : ''} to="/Exam">
@@ -75,9 +75,9 @@ function LeftBar(props) {
           My Tutor
         </ListItem>
         <Divider />
-        <ListItem button component={CustomLink} className={selectedIndex === 'MyPrograme' ? 'sure' : ''} to="/MyPrograme">
+        <ListItem button component={CustomLink} className={selectedIndex === 'AcademicHistory' ? 'sure' : ''} to="/AcademicHistory">
           <i className='iconfont icon-project-o'></i>
-          My Programe
+          Academic History
         </ListItem>
       </List>
     </div>
