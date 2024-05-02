@@ -1,0 +1,186 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root{
+    --bg-color:linear-gradient(180deg,#553849,#7232DD);
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* font size */
+html {
+    font-size: 16px;
+}
+
+body {
+    background-color: #F5F5F5;
+}
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.6rem;
+}
+
+h3 {
+    font-size: 1.4rem;
+}
+
+h4 {
+    font-size: 1.2rem;
+}
+
+h5 {
+    font-size: 1rem;
+}
+
+input {
+    font-size: 1rem;
+}
+
+p {
+    font-size: .9rem;
+}
+
+span {
+    font-size: .8rem;
+}
+
+button {
+    font-size: 1rem;
+}
+
+
+.inner {
+    margin: auto;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-around {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
+
+.blue {
+    color: #2BB5F0;
+}
+
+.red {
+    color: red;
+}
+
+.yellow {
+    color: yellow;
+}
+
+/* 分辨率总体大小 */
+@media only screen and (max-width:800px) {
+    html {
+        font-size: 14px;
+    }
+    #root{
+        .inner{
+            width: 90%;
+        }
+        .containter{
+            width:100%;
+            flex-wrap: wrap;
+            .img{
+                width: 100%;
+                height: 12rem;
+            }
+            .right-content{
+                width: 100%;
+                .css-nrccqq-MuiPaper-root{
+                    height: auto;
+                }
+                .css-y1gt6f{
+                    margin-top: 1rem;
+                }
+                .css-17vbkzs-MuiFormControl-root-MuiTextField-root{
+                    margin-top: 8px;
+                }
+                .css-1h9z7r5-MuiButtonBase-root-MuiTab-root{
+                    padding: .5rem;
+                    min-height:1.5rem;
+                }
+                .css-jpln7h-MuiTabs-scroller,.css-1ujnqem-MuiTabs-root{
+                    height: 2.2rem;
+                }
+                .css-1yuhvjn{
+                    margin-top: 0;
+                }
+            }   
+        }
+        
+    }
+}
+
+@media only screen and (min-width:801x) and (max-width:1300px) {
+    html {
+        font-size: 16px;
+    }
+    
+}
+
+@media only screen and (min-width:1301x) and (max-width:1700px) {
+    html {
+        font-size: 17px;
+    }
+    
+}
+
+@media only screen and (min-width:1701x) and (max-width:2200px) {
+    html {
+        font-size: 18px;
+    }
+    
+}
+
+@media only screen and (min-width:2201x) and (max-width:2900px) {
+    html {
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width:2901x) {
+    html {
+        font-size: 22px;
+    }
+}
+

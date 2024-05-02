@@ -1,0 +1,40 @@
+.SearchTags{
+    position: relative;
+    .search-box{
+        position: absolute;
+        left: 0;
+        bottom: 100%;
+        max-height: 15rem;
+        border: 2px solid #1976D2;
+        overflow-y: auto;
+        background-color: #fff;
+        z-index: 5;
+        width: 100%;
+        padding:.5rem 1rem;
+        border-radius: .4rem;
+        .list-title{
+            color: #1976D2;
+            font-weight: 600;
+        }
+        li{
+            transition: .3s;
+            cursor: pointer;
+            list-style-type:decimal;
+            margin-left: 1rem;
+        }
+        li:hover{
+            color: red;
+        }
+        
+    }
+}
+#root{
+    .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+        padding: .5rem .7rem;
+    }
+    .css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+        top: 50%;
+        transform: translateY(-50%);
+        left: 1rem;
+    }
+}

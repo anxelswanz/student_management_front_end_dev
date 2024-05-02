@@ -1,0 +1,98 @@
+#absence h2 {
+  font-size: 30px;
+}
+#absence .maincenter {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+   overflow: auto;
+   
+}
+#absence .maincenter .topline {
+  min-height: 140px;
+  width: 100%;
+  background: transparent url('../../assets/background.png') no-repeat top fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+#absence .maincenter .topline .topMain {
+  padding: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#absence .maincenter .topline .topMain a {
+  display: block;
+  text-align: center;
+}
+#absence .maincenter .topline h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#absence .maincenter .topline p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+#absence .maincenter .topline button {
+  margin-right: 10px;
+}
+#absence .maincenter .centerbox {
+  background-color: #fff;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+#absence .maincenter .centerbox .leftbox {
+  width: 70%;
+  text-align: left;
+  padding: 10px;
+}
+#absence .maincenter .centerbox .leftbox .timesline {
+  padding: 10px 0;
+  text-align: left;
+}
+#absence .maincenter .centerbox .righttxt {
+  font-size: 24px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 10px 0;
+}
+#absence .maincenter .centerbox .righttxt span {
+  font-size: 40px;
+}
+#absence .maincenter .tipbox {
+  text-align: left;
+  padding: 20px;
+  border-top: 1px solid #ccc;
+  box-sizing: border-box;
+  width: 100%;
+}
+#absence .maincenter .tipbox h2 {
+  display: block;
+  text-align: left;
+  padding: 20px 0;
+}
+#absence .maincenter .tipbox .desc {
+  font-size: 16px;
+  line-height: 30px;
+  text-align: left;
+  
+}
+#absence .date_form{
+  width: 80%;
+  margin-top: 60px;
+}
+#absence .button{
+  color: #ffffff;
+  margin-top: 10px;
+  margin-top: 50px;
+}
+#absence .desc {
+  
+  margin-top: 50px; /* 增加顶部外边距 */
+}

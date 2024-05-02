@@ -1,0 +1,16 @@
+.addButton {
+    border: none;
+    padding: 15px 32px;
+    float: right;
+    margin-left: 20px;
+}
+
+.content-top {
+    margin: 20px;
+}
+
+.content {
+    width: 100%;
+    padding: 20px;
+
+}

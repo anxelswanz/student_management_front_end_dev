@@ -1,0 +1,94 @@
+#mytutor h2 {
+  font-size: 30px;
+}
+#mytutor .maincenter {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  flex-direction: column;
+  overflow-y: auto;
+}
+#mytutor .maincenter > .topline {
+  min-height: 140px;
+  width: 100%;
+  background: transparent url('../../assets/background.png') no-repeat top fixed;
+  background-size: cover;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+#mytutor .maincenter > .topline .topMain {
+  padding: 20px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+#mytutor .maincenter > .topline .topMain a {
+  display: block;
+  text-align: center;
+}
+#mytutor .maincenter > .topline h2 {
+  font-weight: bold;
+  padding-bottom: 10px;
+}
+#mytutor .maincenter > .topline p {
+  font-size: 14px;
+  line-height: 24px;
+  text-align: left;
+}
+#mytutor .maincenter > .topline button {
+  margin-right: 10px;
+  margin-top: -45px;
+}
+#mytutor .maincenter .mainList {
+  background-color: #fff;
+  padding: 30px ;
+  width: 100%;
+}
+#mytutor .maincenter .mainList .topline img {
+  display: block;
+  width: 100%;  
+  max-width: 400px;  
+  height: auto;  
+  margin-left: auto;
+  margin-right: auto; 
+}
+#mytutor .maincenter .mainList .topline p {
+  padding: 40px;
+  text-align: left;
+  font-size: 20px;
+}
+#mytutor .maincenter .downList {
+  overflow: auto;
+}
+#mytutor .maincenter .mainList .topline img {
+  width: 100%;  /* 让图片宽度始终填满容器宽度 */
+  max-width: 250px;  /* 最大宽度为400px，保持图片不会过大 */
+  height: auto;  /* 高度自动，保持图片比例 */
+  margin: 0 auto; /* 水平居中显示 */
+}
+
+#mytutor .maincenter .mainList .topline .info-container {
+  text-align: left;
+}
+@media (max-width: 600px) {
+  #mytutor h2 {
+    font-size: 24px;
+  }
+
+  #mytutor .maincenter > .topline p,
+  #mytutor .maincenter .mainList .topline p {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  #mytutor .maincenter .mainList .topline img {
+    width: 100%;  /* 小屏幕上图片宽度调整为屏幕宽度的90% */
+    margin-left: 5%;  /* 左右各添加5%的外边距以使图片居中 */
+    margin-right: 5%;
+    height: auto;
+  }
+
+  #mytutor .maincenter > .topline button {
+    margin-top: 10px;
+  }
+}

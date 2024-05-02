@@ -1,0 +1,35 @@
+#Header h2 {
+    font-size: 30px;
+}
+#Header .maincenter {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    flex-direction: column;
+    overflow-y: auto;
+
+}
+#Header .maincenter .topline {
+    min-height: 140px;
+    width: 100%;
+    background: transparent url('../../assets/background.png') no-repeat top fixed;
+    background-size: cover;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    position: relative;
+}
+#Header .maincenter .topline .topMain {
+    padding: 20px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+}
+#Header .maincenter .topline h2 {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+#Header .maincenter .topline p {
+    font-size: 14px;
+    line-height: 24px;
+    text-align: left;
+}
+

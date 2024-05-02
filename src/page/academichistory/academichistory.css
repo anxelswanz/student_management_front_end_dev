@@ -1,0 +1,47 @@
+.tiptxt {
+  padding: 10px;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+  
+
+.tabbox {
+  height: calc(100vh - 120px);
+ 
+}
+.menu_btn{
+  position: relative;
+  left: 0;
+  top: 0;
+}
+.menu_box{
+  position: absolute;
+  left: 0;
+  top: 32px;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+}@media (max-width: 600px) {
+  .tabbox {
+    height: auto; /* 或者较小的固定高度，适应手机屏幕 */
+  }
+  .tablebox {
+    font-size: 14px; /* 增加字体大小便于阅读 */
+  }
+  .menu_box {
+    width: 100%; /* 菜单宽度调整为全屏 */
+    top: 50px; /* 根据实际情况调整 */
+  }.ant-table {
+    overflow-x: auto;
+  }.ant-table-column-title {
+    display: none; 
+  }
+  .ant-table-column {
+    min-width: 50px; 
+  }
+  .ant-table-container .ant-table {
+    overflow-x: auto !important;
+  }
+
+}

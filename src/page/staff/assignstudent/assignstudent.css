@@ -1,0 +1,32 @@
+.addButton {
+    border: none;
+    padding: 15px 32px;
+    float: right;
+}
+
+.content-top {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.content {
+    width: 100%;
+    padding: 20px;
+
+}
+
+.content-number {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+}
+
+.content-1 {
+    margin: 20px;
+}

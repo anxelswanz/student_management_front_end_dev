@@ -1,0 +1,27 @@
+@font-face {
+    font-family: "Lexend";
+ 
+    src: url('../../../public/fonts/Lexend-VariableFont_wght.ttf') format("truetype");
+    /*The url is the path to your local font file.*/
+    /*If your font file ends in .otf, use ("opentype") for format, and look up the corresponding keywords on the web!*/
+}
+
+
+
+.title {
+    font-family: Lexend;
+    font-size: 2.5rem;
+}
+
+.login-button {
+    background-color: rgba(6, 4, 140) !important;
+
+    &:hove {
+        background-color: '#050372';
+    }
+}
+
+
+:global(.css-jed2bd-MuiPaper-root){
+    height: 459px !important;
+}

@@ -1,0 +1,36 @@
+
+.gFont {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.description {
+  color: rgb(122, 114, 114); /* dark grey */
+}
+
+.mainbox {
+  width: 100vw;
+  overflow: hidden;
+  
+
+}
+
+.mainbox .container {
+  display: flex;
+  height: 100vh;
+  flex-wrap: nowrap;
+}
+.mainbox .container > .leftbox {
+  width: auto;
+  flex-shrink: 0;
+  box-shadow: 4px 0px #ccc;
+}
+.mainbox .container .maincenter {
+  flex-grow: 1;
+  background-color: #fff;
+  padding: 20px;
+  
+}
+
+/* card */
+.cardbox .MuiTypography-root {
+  text-align: left;
+}
