@@ -1,3 +1,10 @@
+/**
+ * Component Name: StaffAllWork
+ * Description: For staff to view all work and modify
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-20
+ */
+
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -18,15 +25,10 @@ import './allwork.css';
 import '../header.css';
 import downloadIcon from './../../../assets/download.png';
 
-/**
- * Component Name: StaffAllWork
- * Description: For staff to view all work and modify
- * Author: Yuhui Xiao
- * Created Date: 2024-04-25
- */
+
 
 const WorkInfoDialog = ({work, onOk, onCancel}) => {
-    // 展示work信息
+    // Display work information
     const [moduleId, setModuleId] = useState(work?.moduleId ?? '');
     const [studentId, setStudentId] = useState(work?.studentId ?? '');
     const [type, setType] = useState(work?.type ?? '');
@@ -74,7 +76,7 @@ const WorkInfoDialog = ({work, onOk, onCancel}) => {
 }
 
 function AllWork() {
-    // 初始化数据
+    // initialization data
     const defaultWorks = [
         {
             id: 1,
@@ -132,27 +134,43 @@ function AllWork() {
     const [work, setWork] = useState(null);
 
 
-    //  使用tempMarks来存储修改后的mark，handleChange函数用来更新tempMarks
+    // Use tempMarks to store the modified mark, and the handleChange function to update tempMarks
     const [tempMarks, setTempMarks] = useState(defaultWorks.map(work => work.mark));
     const handleChange = (index, value) => {
         const updatedTempMark = [...tempMarks];
         updatedTempMark[index] = value;
         setTempMarks(updatedTempMark);
     };
-    // 从后端获取数据
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/api/staff/getAllWork')
-    //         .then(response => {
-    //             setWorks(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching work data:', error);
-    //         });
-    // })
+    function init() {
+        axios.get('http://localhost:8080/staff/getAllWork',{
+            params: {
+                staffId: localStorage.getItem('user').staffId
+            }
+        })
+            .then(response => {
+                setWorks(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching work data:', error);
+            });
+    }
+    // Get data from the back end
+    useEffect(() => {
+        init();
+
+    })
 
     const handleOk = () => {
         setOpen(false);
         work.mark = work.tempMark
+        axios.post('http://localhost:8080/staff/updateWork', work)
+            .then(response => {
+                init()
+                console.log('Update work successfully');
+            })
+            .catch(error => {
+                console.error('Error updating work:', error);
+            });
     }
 
     const handleCancel = () => {
@@ -174,7 +192,7 @@ function AllWork() {
             <div className='maincenter'>
                 <div className='topline'>
                     <div className='topMain'>
-                        {/* 渲染程序名称和描述 */}
+                        {/* Renderer name and description */}
                         <h2 className='gFont'>All Work</h2>
                         <p className="description">You can find all the assignments and exams submitted by students
                             here</p>

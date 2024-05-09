@@ -1,3 +1,10 @@
+/**
+ * Component Name: MyTimetable
+ * Description: For tutor/student to view and manage their timetable
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-29
+ */
+
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -15,13 +22,8 @@ import axios from 'axios';
 import './timetable.css';
 import '../header.css';
 
-/**
- * Component Name: MyTimetable
- * Description: For tutor/student to view and manage their timetable
- * Author: Yuhui Xiao
- * Created Date: 2024-04-25
- */
 
+// ModuleInfoDialog component displays detailed information about a module
 const ModuleInfoDialog = ({module, onCancel}) => {
     const [moduleName, setModuleName] = useState(module?.moduleName ?? '');
     const [moduleTutor, setModuleTutor] = useState(module?.moduleTutor ?? '');
@@ -70,10 +72,15 @@ function StaffMyTimetable() {
     const [module, setModule] = useState(null);
 
     useEffect(() => {
-        // axios.get('http://localhost:8080/timetables')
-        //     .then((response) => {
-        //         setTimetables(response.data);
-        //     });
+         // Fetch timetable data for staff member
+        axios.get('http://localhost:8080/staff/getMyTimetable',{
+            params: {
+                staffId: localStorage.getItem('user').staffId
+            }
+        })
+            .then((response) => {
+                setTimetables(response.data);
+            });
     });
 
 
@@ -90,20 +97,13 @@ function StaffMyTimetable() {
     ];
 
     const handleClickCourse = (moduleId) => {
-        // axios.get('http://localhost:8080/module/' + moduleId)
-        //     .then((response) => {
-        //         setModule(response.data);
-        //         setOpen(true);
-        //
-        //     })
+        axios.get('http://localhost:8080/module/' + moduleId)
+            .then((response) => {
+                setModule(response.data);
+                setOpen(true);
+
+            })
         setOpen(true);
-        let defaultModule = {
-            moduleName: 'Course 1',
-            moduleTutor: 'Tutor 1',
-            classLocation: 'Room 101',
-            moduleTime: '1-1'
-        }
-        setModule(defaultModule);
     }
 
     const handleClose = () => {
@@ -119,7 +119,7 @@ function StaffMyTimetable() {
             <div className='maincenter'>
                 <div className='topline'>
                     <div className='topMain'>
-                        {/* 渲染程序名称和描述 */}
+                        {/* Renderer name and description */}
                         <h2 className='gFont'>My Timetable</h2>
                         <p className="description">You can check your timetable here.</p>
                     </div>

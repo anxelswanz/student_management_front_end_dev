@@ -62,7 +62,7 @@
 #Modules .mainList .tablebox .MuiTableRow-root {
   margin: 0;
   padding: 0;
-  border-bottom: 0; /* 移除可能存在的行间边界 */
+  border-bottom: 0;
 }
 
 #Modules .mainList .tablebox .MuiCollapse-container {
@@ -81,22 +81,22 @@
 }
 
 #Modules .mainList .tablebox .MuiTableCell-root {
-  padding: 20px 16px; /* 根据需要调整内边距 */
+  padding: 20px 16px; 
   
 }
 
 #Modules .mainList .tablebox .MuiTableCell-body {
-  font-size: 18px; /* 调整文本大小以节省空间 */
+  font-size: 18px; 
 }
 
 #Modules .mainList .tablebox .MuiTableRow-root {
-  border-bottom: none; /* 移除行之间的边界 */
+  border-bottom: none; 
 }
 
 #Modules .mainList .tablebox .MuiTableCell-root {
-  border-bottom: none; /* 确保单元格底部没有边框 */
+  border-bottom: none; 
 }
 
 #Modules .mainList .tablebox .MuiTableRow-root.info-separator {
-  border-bottom: 1px solid #ccc; /* 信息部分间添加横线 */
+  border-bottom: 1px solid #ccc; 
 }

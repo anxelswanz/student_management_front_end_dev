@@ -24,14 +24,14 @@
   flex-direction: column;
 }@media (max-width: 600px) {
   .tabbox {
-    height: auto; /* 或者较小的固定高度，适应手机屏幕 */
+    height: auto; 
   }
   .tablebox {
-    font-size: 14px; /* 增加字体大小便于阅读 */
+    font-size: 14px; 
   }
   .menu_box {
-    width: 100%; /* 菜单宽度调整为全屏 */
-    top: 50px; /* 根据实际情况调整 */
+    width: 100%; 
+    top: 50px; 
   }.ant-table {
     overflow-x: auto;
   }.ant-table-column-title {

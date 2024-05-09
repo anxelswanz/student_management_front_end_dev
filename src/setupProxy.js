@@ -3,8 +3,8 @@ module.exports = function (app) {
     app.use(
         createProxyMiddleware('/api', {
             target: 'http://localhost:8080',
-            changeOrigin: true, // 控制服务器请求头中host的值
-            pathRewrite: { '^/api': '' }  //重写请求路径
+            changeOrigin: true, // Controls the value of host in the server request header
+            pathRewrite: { '^/api': '' }  //Rewriting the request path
         })
     )
 }

@@ -1,12 +1,9 @@
 /**
  * Component Name: Login_register
- * Description: A layout component for displaying login and registration pages. This component takes two arguments: bgimg and children..
+ * Description: This component can be used on an application's login or registration page, and can be flexibly adapted to different scenarios by modifying the content passed in by the children.
  * Author: Qianfeng Zhang
- * Created Date: 2024-04-25
- * Modified By: Ronghui Zhong
- * Last Modified: 2024-04-26
+ * Created Date: 2024-04-17
  */
-
 
 import './index.scss';
 import "./loginAndReg.scss"

@@ -1,3 +1,10 @@
+/**
+ * Component Name: AdminManagement
+ * Description: AdminManagement component is used to look all the student and the teacher information
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-28
+ */
+
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -16,13 +23,7 @@ import axios from 'axios';
 import './management.css';
 import '../header.css';
 
-/**
- * Component Name: AdminManagement
- * Description: AdminManagement component is used to look all the student and the teacher information
- * Author: Yuhui Xiao
- * Created Date: 2024-04-25
- */
-
+// StudentTable component displays a table of student information
 const StudentTable = ({students})=> {
     return (
         <TableContainer component={Paper}>
@@ -56,6 +57,7 @@ const StudentTable = ({students})=> {
     );
 }
 
+// TeacherTable component displays a table of teacher information
 const TeacherTable = ({teachers})=> {
     return (
         <TableContainer component={Paper}>
@@ -112,30 +114,32 @@ function AdminManagement() {
         {id: 1, teacherId: 'T10001', teacherName: 'John Doe', email: '213@edu.cn', background: 'Computer Science'},
         {id: 2, teacherId: 'T10002', teacherName: 'Jane Doe', email: '213@edu.cn', background: 'Computer Science'},
     ];
+    // State variables to store students, teachers, and toggles for table visibility
     const [students, setStudents] = useState(defaultStudents);
     const [teachers, setTeachers] = useState(defaultTeachers);
     const [openStudent, setOpenStudent] = useState(true);
     const [openTeacher, setOpenTeacher] = useState(false);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/students')
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setStudents(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    //     axios.get('http://localhost:8080/teachers')
-    //         .then(res => {
-    //             console.log(res.data);
-    //             setTeachers(res.data);
-    //         })
-    //         .catch(err => {
-    //             console.log(err);
-    //         });
-    // }, []);
+    useEffect(() => {
+        // Fetch student and teacher data from the server
+        axios.get('http://localhost:8080/staff/getAllStudents')
+            .then(res => {
+                console.log(res.data);
+                setStudents(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+        axios.get('http://localhost:8080/staff')
+            .then(res => {
+                console.log(res.data);
+                setTeachers(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, []);
 
 
     return (
@@ -146,7 +150,7 @@ function AdminManagement() {
             <div className='maincenter'>
                 <div className='topline'>
                     <div className='topMain'>
-                        {/* 渲染程序名称和描述 */}
+                        {/* Render the program name and description */}
                         <h2 className='gFont'>Admin Management</h2>
                         <p className="description">You can look all the student and the teacher information</p>
                         <div className='content-top'>
@@ -172,6 +176,7 @@ function AdminManagement() {
                                 onClick={() => navigate('/Register')}>
                             Register</Button>
                     </div>
+                    {/* Render the StudentTable if openStudent is true, otherwise render the TeacherTable */}
                     {openTeacher ? '': <StudentTable students={students}/>}
                     {openStudent ? '': <TeacherTable teachers={teachers}/>}
 

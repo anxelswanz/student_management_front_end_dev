@@ -1,3 +1,10 @@
+/**
+ * Component Name: My Tutor
+ * Description: Students can view the tutor's information, as well as click on the button to email the tutor and go to the ABSENCE page.
+ * Author: Yu Han
+ * Created Date: 2024-04-26
+ */
+
 import React, { useState, useEffect } from 'react';
 import './mytutor.css';
 import Grid from '@material-ui/core/Grid';
@@ -8,9 +15,7 @@ import axios from 'axios';
 import { tutorInfo} from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-
-
-//定义样式
+// Define styles
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -20,56 +25,66 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
 }));
+
+
 function MyTutor() {
-  const navigate = useNavigate();
-  const classes = useStyles();
-  const [selectedTutor, setSelectedTutor] = useState(null);
-  const [studentId, setStudentId] = useState(null);
+  const navigate = useNavigate();// Initializing the navigate function for navigation
+  const classes = useStyles();// Using custom styles
+  const [selectedTutor, setSelectedTutor] = useState(null);// Initializing the selected tutor state
+  const [studentId, setStudentId] = useState(null);// Initializing the student ID state
+
+  // Executed once when the component is loaded
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));// Getting user information from localStorage
     const studentId = user ? user.studentId : null;
 
     if (!studentId) {
       console.error('No student ID found');
       return;
     }
+
+    // GET  tutor information, passing the student ID as a parameter
     const fetchTutorInfo = () => {
       axios.get(tutorInfo, { params: { studentId : studentId } })
         .then(response => {
           if (response.data.code === 200 && response.data.obj && response.data.obj.length > 0) {
-            setSelectedTutor(response.data.obj[0]);
+            setSelectedTutor(response.data.obj[0]);// If the request is successful and the returned data is valid, set the selected tutor information
           } else {
-            console.error('无导师信息数据或数据格式错误');
+            console.error('No tutor information data or data format error');
           }
         })
         .catch(error => {
-          console.error('获取导师信息失败:', error);
+          console.error('Failed to get tutor information:', error);
         });
     };
 
-    // 调用获取导师信息数据的函数
+    // Call the function to fetch tutor information data
     fetchTutorInfo();
   }, []);
-  // 跳转到goToAbsence页面
+
+
+// Function to navigate to the Absence page
   const goToAbsence = () =>{
     navigate("/Absence")
   };
 
+  // Function to dynamically import all image
   function importAll(r) {
     let images = [];
     r.keys().map((item, index) => { images[index] = r(item); });
     return images;
   }
   
+  // Dynamically import images using require.context
   const images = importAll(require.context('../../assets/staff', false, /\.(png|jpe?g|svg)$/));
-    // 根据 staffId 后两位确定要显示的图片
+    // Determine which image to display based on the last two digits of the staff ID
     const getAvatarImage = (staffId) => {
       const lastTwoDigits = staffId.slice(-2);
       const index = parseInt(lastTwoDigits, 10);
       if (index >= 1 && index <= images.length) {
         return images[index - 1];
       } else {
-        return `https://picsum.photos/400/200?random`;
+        return `https://picsum.photos/400/200?random`;// Return a random image link if the index is invalid
       }
     };
 
@@ -83,7 +98,7 @@ function MyTutor() {
       <div className='maincenter'>
         <div className='topline'>
           <div className='topMain'>
-            <h2 className='gFont'>My Tutor</h2>
+            <h2 className='gFont'>My Tutor</h2>{/* Render the title */}
             <br />
           </div>
           <br />
@@ -94,13 +109,13 @@ function MyTutor() {
             <img className="left_img" src={selectedTutor ? getAvatarImage(selectedTutor.staffId) : `https://picsum.photos/400/200?random`} alt="" />
             </Grid>
             <Grid item xs={5}>
-              {/* 显示选中导师的信息 */}
+               {/* Display the selected tutor's information */}
               <p>Name: {selectedTutor?.firstName} {selectedTutor?.surname}</p>
               <p>Email: {selectedTutor?.email}</p>
-              <Typography>{selectedTutor?.background}</Typography> {/* 显示导师背景信息 */}
+              <Typography>{selectedTutor?.background}</Typography> {/* Display the tutor's background information */}
             </Grid>
             <Grid item xs={2}>
-              {/* 显示联系导师的按钮 */}
+              {/* Display buttons to contact the tutor */}
               <Button 
                   size="small" 
                   onClick={() => {
@@ -108,7 +123,7 @@ function MyTutor() {
                   }} 
                   variant="contained" 
                   color="secondary"
-                  title="通过电子邮件联系导师" // 添加悬停提示
+                  title="Contact tutor via email" // Add hover tooltip
                 >
                  Bookings
               </Button>
@@ -116,7 +131,7 @@ function MyTutor() {
                   size="small" 
                   variant="contained" 
                   color="warning"
-                  onClick={goToAbsence}
+                  onClick={goToAbsence}// Redirect to the Absence page when clicked
                 >
                  Absence
               </Button>

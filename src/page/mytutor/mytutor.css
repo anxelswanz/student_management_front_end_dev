@@ -61,10 +61,10 @@
   overflow: auto;
 }
 #mytutor .maincenter .mainList .topline img {
-  width: 100%;  /* 让图片宽度始终填满容器宽度 */
-  max-width: 250px;  /* 最大宽度为400px，保持图片不会过大 */
-  height: auto;  /* 高度自动，保持图片比例 */
-  margin: 0 auto; /* 水平居中显示 */
+  width: 100%; 
+  max-width: 250px; 
+  height: auto; 
+  margin: 0 auto; 
 }
 
 #mytutor .maincenter .mainList .topline .info-container {
@@ -82,8 +82,8 @@
   }
 
   #mytutor .maincenter .mainList .topline img {
-    width: 100%;  /* 小屏幕上图片宽度调整为屏幕宽度的90% */
-    margin-left: 5%;  /* 左右各添加5%的外边距以使图片居中 */
+    width: 100%;  
+    margin-left: 5%;  
     margin-right: 5%;
     height: auto;
   }

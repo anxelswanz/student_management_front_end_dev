@@ -1,3 +1,10 @@
+/**
+ * Component Name: Programme
+ * Description: Students can view the IDs, names, start times, and durations of the modules and moduels owned by their programme.
+ * Author: Yu Han
+ * Created Date: 2024-04-05
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../component/leftbar/leftbar';
@@ -8,14 +15,14 @@ import './Programme.css';
 
 
 function Programme() {
-  const [studentModules, setStudentModules] = useState([]);
-  const [programmeData, setProgrammeData] = useState({});
-  const [openVisible, setOpenVisible] = useState(false);
-  const [drawVisible, setDrawVisible] = useState(false);
-  const [programmeStatus, setProgrammeStatus] = useState(null);
+  const [studentModules, setStudentModules] = useState([]);// State to hold student module data
+  const [programmeData, setProgrammeData] = useState({});// State to hold programme data
+  const [openVisible, setOpenVisible] = useState(false);// State for visibility of the confirmation dialog
+  const [drawVisible, setDrawVisible] = useState(false);// State for visibility of the settings menu
+  const [programmeStatus, setProgrammeStatus] = useState(null);// State to hold the status of the programme
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user'));
-  const studentId = user ? user.studentId : null;
+  const user = JSON.parse(localStorage.getItem('user'));// Retrieve user information from localStorage
+  const studentId = user ? user.studentId : null;// If user exists, retrieve student ID; otherwise, null
 
   
   useEffect(() => {
@@ -25,11 +32,7 @@ function Programme() {
     }
   
 
-  
-
-
-
-// Fetching details for each module
+// Get moduels details, passing the student ID as a parameter
 axios.get(moduleTime, { params: { studentId: studentId } })
       .then(response => {
         if (response.data.code === 200 && Array.isArray(response.data.obj)) {
@@ -48,12 +51,7 @@ axios.get(moduleTime, { params: { studentId: studentId } })
       });
 
 
-
-
-
-
-
-    // Fetching programme name
+    // Get  programme name, passing the student ID as a parameter
     axios.get(programmeName, { params: { studentId: studentId } })
       .then(response => {
         if (response.data.code === 200 && response.data.obj) {
@@ -68,31 +66,34 @@ axios.get(moduleTime, { params: { studentId: studentId } })
       });
 
 
-  // Fetching programme description
-axios.get(programmeDes, { params: { studentId: studentId } })
-.then(response => {
-  if (response.data.code === 200 && response.data.obj) {
-    setProgrammeData(prevData => ({
-      ...prevData,
-      description: response.data.obj
-    }));
-  }
-})
-.catch(error => {
-  console.error('Error fetching programme description:', error);
-});
+  // Get  programme description, passing the student ID as a parameter
+    axios.get(programmeDes, { params: { studentId: studentId } })
+    .then(response => {
+      if (response.data.code === 200 && response.data.obj) {
+        setProgrammeData(prevData => ({
+          ...prevData,
+          description: response.data.obj
+        }));
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching programme description:', error);
+    });
+    }, [studentId]);
 
-}, [studentId]);
-
+// Handle user status change
     const userChange = (val) =>{
       setProgrammeStatus(val);
         setOpenVisible(true);
       };
  
+  // Handle cancle operation for the dialog
   const handleCancel = () =>{
     setOpenVisible(false);
     setDrawVisible(false)
   };
+
+  // Handle confirm operation for the dialog
   const handleOk = () => {
     handleCancel();
     if (!studentId || !programmeStatus) {
@@ -102,12 +103,13 @@ axios.get(programmeDes, { params: { studentId: studentId } })
     console.log('studentId:', studentId);
     console.log('programmeStatus:', programmeStatus);
     
-    // 将参数附加到 URL 中
+    // Append parameters to the URL
     const url = `${updateProgrammeStatus}?studentId=${studentId}&programmeStatus=${programmeStatus}`;
   
+    // Send PUT request with parameters studentId and programmeStatus
     axios.put(
       url,
-      null, // 空的请求体
+      null, 
       {
         headers: {
           'Content-Type': 'application/json'
@@ -128,11 +130,10 @@ axios.get(programmeDes, { params: { studentId: studentId } })
       });
   };
   
- 
+ // Open settings menu
   const openMenu = () =>{
     setDrawVisible(val=>!val);
   };
-
 
 
   return (
@@ -143,15 +144,18 @@ axios.get(programmeDes, { params: { studentId: studentId } })
       <div className='maincenter'>
         <div className='topline'>
           <div className='topMain'>
-            {/* 渲染程序名称和描述 */}
+            {/*Render programme name and description*/}
             <h2 className='gFont'>{programmeData.name}</h2>
             <p class="description">{programmeData.description}</p>
             <div className='open_menu_btn'>
+             {/*Settings button, toggles settings menu visibility*/}
               <Button className='menu_btn_first' variant="contained" onClick={openMenu}>Setting</Button>
-              {
-                drawVisible &&(
+             {/*Conditionally render buttons if drawVisible is true*/}
+              {drawVisible &&(
                   <>
+                     {/*Triggers status change to "withdraw"*/}
                     <Button onClick={()=>userChange(3)} className='menu_btn_item' variant="contained">withdraw</Button>
+                    {/*Triggers status change to "suspend"*/}
                     <Button onClick={()=>userChange(2)} className='menu_btn_item' variant="contained">suspend</Button>
                   </>
                 )
@@ -163,6 +167,7 @@ axios.get(programmeDes, { params: { studentId: studentId } })
           <TableContainer component={Paper} className='tablebox'>
             <Table aria-label="simple table">
               <TableHead>
+                {/*Table headers defining module information*/}
                 <TableRow>
                   <TableCell>Module ID</TableCell>
                   <TableCell>Module</TableCell>
@@ -171,6 +176,7 @@ axios.get(programmeDes, { params: { studentId: studentId } })
                 </TableRow>
               </TableHead>
               <TableBody>
+                {/*Loop through each module and render detailed information*/}
                 {studentModules.map((module, index) => (
                   <TableRow key={index}>
                   <TableCell component="th" scope="row" className="gFont">{module.moduleId}</TableCell>
@@ -184,20 +190,22 @@ axios.get(programmeDes, { params: { studentId: studentId } })
           </TableContainer>
         </div>
         <div className='fn-clear tr btnline'>
+           {/*See My Modules button, navigates to modules page*/}
           <Button size="small" onClick={() => navigate('/Modules')} variant="contained" color="primary">See My Modules</Button>
+          {/*Academic History button, navigates to academic history page*/}
           &nbsp;<Button size="small" onClick={() => navigate('/AcademicHistory')} variant="contained" color="primary">Programme History</Button>
         </div>
       </div>
 
-      {/* 二级确认框 */}
+     {/*Secondary confirmation dialog*/}
         <Dialog open={openVisible} onClose={handleCancel}>
-          <DialogTitle>温馨提示：</DialogTitle>
+          <DialogTitle>Kind Reminder:</DialogTitle>
           <DialogContent>
-            <p>您是否确认改变状态？</p>
+            <p>Are you sure you want to change the status?</p>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleOk} color="primary">确认</Button>
-            <Button onClick={handleCancel} color="primary">取消</Button>
+            <Button onClick={handleOk} color="primary">Confirm</Button>
+            <Button onClick={handleCancel} color="primary">Cancel</Button>
           </DialogActions>
         </Dialog>
       </div>

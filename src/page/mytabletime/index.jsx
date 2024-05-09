@@ -1,3 +1,10 @@
+/**
+ * Component Name: MyTimetable
+ * Description: For tutor/student to view and manage their timetable
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-29
+ */
+
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LeftBar from './../../component/leftbar/leftbar';
@@ -65,10 +72,14 @@ function MyTimetable() {
     const [module, setModule] = useState(null);
 
     useEffect(() => {
-        // axios.get('http://localhost:8080/timetables')
-        //     .then((response) => {
-        //         setTimetables(response.data);
-        //     });
+        axios.get('http://localhost:8080/staff/getMyTimetable',{
+            params: {
+                staffId: localStorage.getItem('user').staffId
+            }
+        })
+            .then((response) => {
+                setTimetables(response.data);
+            });
     });
 
 
@@ -85,20 +96,13 @@ function MyTimetable() {
     ];
 
     const handleClickCourse = (moduleId) => {
-        // axios.get('http://localhost:8080/module/' + moduleId)
-        //     .then((response) => {
-        //         setModule(response.data);
-        //         setOpen(true);
-        //
-        //     })
+        axios.get('http://localhost:8080/module/' + moduleId)
+            .then((response) => {
+                setModule(response.data);
+                setOpen(true);
+
+            })
         setOpen(true);
-        let defaultModule = {
-            moduleName: 'Course 1',
-            moduleTutor: 'Tutor 1',
-            classLocation: 'Room 101',
-            moduleTime: '1-1'
-        }
-        setModule(defaultModule);
     }
 
     const handleClose = () => {
@@ -114,7 +118,7 @@ function MyTimetable() {
             <div className='maincenter'>
                 <div className='topline'>
                     <div className='topMain'>
-                        {/* 渲染程序名称和描述 */}
+                        {/* Renderer name and description */}
                         <h2 className='gFont'>My Timetable</h2>
                         <p className="description">You can check your timetable here.</p>
                     </div>

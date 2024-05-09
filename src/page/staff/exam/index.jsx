@@ -1,3 +1,10 @@
+/**
+ * Component Name: StaffExam
+ * Description: You can post exams and view all published exams here
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-27
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -17,7 +24,10 @@ import axios from 'axios';
 import './exam.css';
 import '../header.css';
 
+
+// ExamForm component that is used to display and submit the form for creating or editing an exam.
 const ExamForm = ({exam, modules, onSubmit, onCancel}) => {
+    // State variables to store the form data
     const [moduleId, setModuleId] = useState(exam?.moduleId ?? '');
     const [examName, setExamName] = useState(exam?.examName ?? '');
     const [examDate, setExamDate] = useState(exam?.examDate ?? '');
@@ -27,6 +37,7 @@ const ExamForm = ({exam, modules, onSubmit, onCancel}) => {
     const [examDuration, setExamDuration] = useState(exam?.examDuration ?? '');
     const [examDescription, setExamDescription] = useState(exam?.examDescription ?? '');
 
+    // Function to handle form submission
     const handleSubmit = (event) => {
         event.preventDefault();
         onSubmit({
@@ -42,6 +53,7 @@ const ExamForm = ({exam, modules, onSubmit, onCancel}) => {
         });
     };
 
+    // Generate the options for the module select dropdown
     const moduleOptions = modules.map((module, index) =>
         <MenuItem key={index} value={module.id}>{module.name}</MenuItem>);
 
@@ -117,7 +129,9 @@ const ExamForm = ({exam, modules, onSubmit, onCancel}) => {
     );
 };
 
+// StaffExam component that displays the staff exam page
 function StaffExam() {
+    // State variables to store the modules, exams, currently editing exam, and add exam flag
     const [modules, setModules] = useState([]);
     const [exams, setExams] = useState([]);
     const [editingExam, setEditingExam] = useState(null);
@@ -125,23 +139,33 @@ function StaffExam() {
 
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/module')
-    //         .then(response => {
-    //             setModules(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching modules:', error);
-    //         });
-    //     axios.get('http://localhost:8080/exam')
-    //         .then(response => {
-    //             setExams(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching exams:', error);
-    //         });
-    // }, []);
+    // Function to initialize the component by fetching modules and exams from the server
+    function init() {
+        axios.get('http://localhost:8080/module')
+            .then(response => {
+                setModules(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching modules:', error);
+            });
+        axios.get('http://localhost:8080/staff/exam',{
+            params: {
+                staffId: localStorage.getItem('user').staffId
+            }
+        })
+            .then(response => {
+                setExams(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching exams:', error);
+            });
+    }
 
+    useEffect(() => {
+        init()
+    }, []);
+
+    // Default modules data
     const defaultModules  = [
         { id: "EM00001", name: "Engineering Mathematics and Systems Modelling" },
         { id: "FP00002", name: "Foundations of Programming" },
@@ -151,44 +175,38 @@ function StaffExam() {
         { id: "T100006", name: "Thermofluids" }
     ]
 
+    // Function to handle saving an added exam
     const handleAddSaveExam = (exam) => {
-        // axios.post('http://localhost:8080/exam', exam)
-        //     .then(response => {
-        //         setExams(prevExams => [...prevExams, response.data]);
-        //         setEditingExam(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error saving exam:', error);
-        //     });
-        setAddExam(false);
-        exam.id = exams.length + 1;
-        setExams(prevExams => [...prevExams, exam]);
-        exam.moduleName = defaultModules.find(module => module.id === exam.moduleId).name;
-
-
+        axios.post('http://localhost:8080/staff/postExam', exam)
+            .then(response => {
+                init()
+                setEditingExam(null);
+                setAddExam(false);
+            })
+            .catch(error => {
+                console.error('Error saving exam:', error);
+            });
     };
 
+    // Function to handle saving an edited exam
     const handleEditSaveExam = (exam) => {
-        // axios.put('http://localhost:8080/exam', exam)
-        //     .then(response => {
-        //         setExams(prevExams => prevExams.map(e => e.id === exam.id ? response.data : e));
-        //         setEditingExam(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error saving exam:', error);
-        //     });
-
-        exam.moduleName = defaultModules.find(module => module.id === exam.moduleId).name;
-        setExams(prevExams => prevExams.map(e => e.id === exam.id ? exam : e));
-
-
-        setEditingExam(null);
+        axios.post('http://localhost:8080/staff/postExam', exam)
+            .then(response => {
+                init()
+                setEditingExam(null);
+                setAddExam(false);
+            })
+            .catch(error => {
+                console.error('Error saving exam:', error);
+            });
     };
 
+    // Function to handle editing an exam
     const handleEditExam = (exam) => {
         setEditingExam(exam);
     };
 
+    // Function to handle canceling the edit or add exam action
     const handleCancelEdit = () => {
         setEditingExam(null);
         setAddExam(false);

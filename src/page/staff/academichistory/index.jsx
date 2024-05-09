@@ -1,3 +1,10 @@
+/**
+ * Component Name: StudentAcademicHistory
+ * Description: Staff can view all relevant student information here
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-15
+ */
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -15,27 +22,28 @@ import {
 import axios from 'axios';
 import './StudentAcademicHistory.css';
 import '../header.css';
-/**
- * Component Name: StudentAcademicHistory
- * Description: Staff can view all relevant student information here
- * Author: Yuhui Xiao
- * Created Date: 2024-04-25
- */
 
+// Define the functional component for Student Academic History
 function StudentAcademicHistory() {
+    // State to hold student data
     const [students, setStudents] = useState([]);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:8080/studentAcademicHistory')
-    //         .then(response => {
-    //             setStudents(response.data);
-    //         })
-    //         .catch(error => {
-    //             console.error('Error fetching students:', error);
-    //         });
-    // })
-
+    useEffect(() => {
+        // Fetch student data from API
+        axios.get('http://localhost:8080/getAllStudents',{
+            params: {
+                staffType: localStorage.getItem('user').staffType
+            }
+        })
+            .then(response => {
+                setStudents(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching students:', error);
+            });
+    })
+ // Default student data
     const defaultStudents = [
         {id: 1, studentId: 'S10001', studentName: 'John Doe', year: 'year1', programmeName: 'Computer Science'},
         {id: 2, studentId: 'S10002', studentName: 'Jane Doe', year: 'year2', programmeName: 'Computer Science'},
@@ -53,7 +61,7 @@ function StudentAcademicHistory() {
         <div className='maincenter'>
             <div className='topline'>
                 <div className='topMain'>
-                    {/* 渲染程序名称和描述 */}
+                    {/* Renderer name and description */}
                     <h2 className='gFont'>Student Academic History</h2>
                     <p className="description">You can view all relevant student information here, click on the row, you will see all academic history of this student</p>
                 </div>
@@ -97,5 +105,5 @@ function StudentAcademicHistory() {
     </div>
     );
 }
-
+// Export the component
 export default StudentAcademicHistory;

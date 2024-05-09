@@ -1,3 +1,10 @@
+/**
+ * Component Name: Index.jsx
+ * Description: Used to configure and manage all page routes.
+ * Author: Yu Han
+ * Created Date: 2024-04-11
+ */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';

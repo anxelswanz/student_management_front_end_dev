@@ -1,3 +1,10 @@
+/**
+ * Component Name: Exam
+ * Description: Students can view exam details (exam time, location, etc.) for different modules
+ * Author: Yu Han
+ * Created Date: 2024-04-15
+ */
+
 import React, { useState, useEffect } from 'react';
 import LeftBar from '../../component/leftbar/leftbar';
 import { Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
@@ -6,24 +13,25 @@ import axios from 'axios';
 import { moduleExamInfo, programmeName, submitExam } from '../../api/api';
 
 function Exam() {
-  const [modules, setModules] = useState([]);
-  const [currentModule, setCurrentModule] = useState(null);
-  const [programName, setProgramName] = useState('');
-  const [openVisible, setOpenVisible] = useState(false);
-  const [studentId, setStudentId] = useState(null);
+  const [modules, setModules] = useState([]);// State to store exam module information
+  const [currentModule, setCurrentModule] = useState(null);/// Currently selected exam module
+  const [programName, setProgramName] = useState('');// Programme name
+  const [openVisible, setOpenVisible] = useState(false);// Control the visibility of the secondary confirmation dialog
+  const [studentId, setStudentId] = useState(null);// Student ID
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem('user'));
-    const studentId = user ? user.studentId : null;
-    setStudentId(user.studentId);
+    const user = JSON.parse(localStorage.getItem('user'));// Retrieve user information from localStorage
+    const studentId = user ? user.studentId : null;// If user exists, get student ID, otherwise set to null
+    setStudentId(user.studentId);// Set student ID state
     if (!studentId) {
       console.error('No student ID found');
       return;
     }
-    // 请求获取programme名称
+
+     // Get programme name, with studentId as parameter
     axios.get(programmeName, { params: { studentId : studentId } })
     .then(response => {
       if (response.status === 200 && response.data && response.data.code === 200) {
-        setProgramName(response.data.obj);
+        setProgramName(response.data.obj);// set programme name
       }
     })
     .catch(error => {
@@ -32,6 +40,7 @@ function Exam() {
     });
   }, []);
 
+  // Get exam information, with studentId as parameter
   useEffect(() => {
     if (!studentId) return;
     const fetchExamDetails = () => {
@@ -49,27 +58,25 @@ function Exam() {
               examDes: module.examDes|| 'N/A'
 
             }));
-            setModules(fetchedModules);
+            setModules(fetchedModules);// Set exam module information state
             if (fetchedModules.length > 0) {
-              setCurrentModule(fetchedModules[0]);
+              setCurrentModule(fetchedModules[0]);// Set current exam module to the first module
             }
           }
         })
         .catch(error => {
-          console.error('获取考试详情失败:', error);
+          console.error('Failed to fetch exam details:', error);
         });
     };
     
 
-    // 调用获取考试模块数据的函数
+    // Call function to fetch exam module data
     fetchExamDetails();
-
-     
     }, [studentId]);
 
-  
+    // Handle confirm operation for the dialog
     const handleOk = () => {
-      // 确保在调用接口前 currentModule 已经被正确设置
+      // Ensure currentModule is correctly set before calling the API
       if (!currentModule) {
         console.error('No module selected');
         return;
@@ -79,7 +86,7 @@ function Exam() {
     
       axios.put(
         url,
-        null, // 如果PUT请求不需要请求体，这里可以是null
+        null, // If PUT request does not require a request body, this can be null
         {
           headers: {
             'Content-Type': 'application/json'
@@ -87,26 +94,26 @@ function Exam() {
         }
       )
       .then(response => {
-        console.log('考试状态更新成功:', response);
-        setOpenVisible(false);  // 关闭二级确认框
+        console.log('Exam status updated successfully:', response);
+        setOpenVisible(false);  // Close the secondary confirmation dialog
       })
       .catch(error => {
-        console.error('考试状态更新失败:', error);
-        setOpenVisible(false);  // 保守处理，即使出错也关闭对话框
+        console.error('Exam Status Update Failed:', error);
+        setOpenVisible(false);  // Close the dialog conservatively, even if an error occurs
       });
     };
     
     
 
-       // 控制二级确认框的显示
-   const handleConfirmButtonClick = () => {
-          setOpenVisible(true);
-        };
+       // Control the visibility of the secondary confirmation dialog
+        const handleConfirmButtonClick = () => {
+                setOpenVisible(true);
+              };
 
-        // 控制二级确认框的隐藏
-   const handleCancel = () => {
-          setOpenVisible(false);
-        };
+        // Control the visibility of the secondary confirmation dialog
+        const handleCancel = () => {
+                setOpenVisible(false);
+              };
 
   return (
       <div className='container' id='exam'>
@@ -116,8 +123,9 @@ function Exam() {
         <div className='maincenter'>
           <div className='topline'>
             <div className='topMain'>
-              <h2 className='gFont'>{programName}</h2>
+              <h2 className='gFont'>{programName}</h2>{/* Render programme name */}
               <div className='fn-clear'>
+                {/* Render module buttons for switching between different modules */}
                 {modules.map((module, i) => (
                   <Button
                     key={i}
@@ -133,10 +141,11 @@ function Exam() {
             </div>
           </div>
           <div className='centerbox'>
+         {/* Exam module information */}
             <div className='btn-group'>
               <div className='leftbox'>
-                <h2 className='gFont'>{currentModule?.moduleName}</h2>
-                <p className='description'>{currentModule?.examDes}</p>
+                <h2 className='gFont'>{currentModule?.moduleName}</h2>{/* Render current module name */}
+                <p className='description'>{currentModule?.examDes}</p>{/* Render current module exam description */}
                 <p className='timesline'>
                   Date：{currentModule?.examDate}
                   <br />
@@ -148,7 +157,7 @@ function Exam() {
                   <br />    
                   Site: {currentModule?.examSite}
                 </p>
-
+                  {/* Submit exam button */}
                   <Button
                     className="button"
                     type="warning"
@@ -163,6 +172,7 @@ function Exam() {
              
             </div>
           </div>
+           {/* Exam tips */}
           <div className='tipbox'>
             <h2 className='gFont'>Tips</h2>
             <p>As you prepare for your examinations, it is imperative to adhere strictly to the guidelines set forth to ensure a disciplined and orderly conduct during the exam period.</p>
@@ -172,18 +182,17 @@ function Exam() {
             <p>By diligently following these protocols, you ensure that the examination process is fair and efficient for yourself and all other participants. Your adherence to these rules reflects your integrity and commitment to the principles of fair academic practice.</p>
           </div>
         </div>
-              {/* 二级确认框 */}
-      <Dialog open={openVisible} onClose={handleCancel}>
-        <DialogTitle>温馨提示：</DialogTitle>
-        <DialogContent>
-          <p>您是否确认提交考试</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleOk} color="primary">确认</Button>
-          <Button onClick={handleCancel} color="primary">取消</Button>
-        </DialogActions>
-      </Dialog>
-
+        {/* Secondary confirmation dialog */}
+          <Dialog open={openVisible} onClose={handleCancel}>
+            <DialogTitle>Confirmation:</DialogTitle>
+            <DialogContent>
+              <p>Are you sure submit the exam？</p>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleOk} color="primary">Confirm</Button>
+              <Button onClick={handleCancel} color="primary">Cancel</Button>
+            </DialogActions>
+          </Dialog>
       </div>
   );
 }

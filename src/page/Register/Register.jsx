@@ -1,13 +1,11 @@
 /**
- * Component Name: searchTags
+ * Component Name: Register
  * Description: The page of Register.
  * Author: Qianfeng Zhang
- * Created Date: 2024-04-15
- * Modified By: Qianfeng Zhang
- * Last Modified: 2024-05-01
+ * Created Date: 2024-04-27
+ * Modified By: Ronghui Zhong
+ * Last Modified: 2024-05-03
  */
-
-
 
 import React, { useState } from "react";
 import { Box, Tabs, Tab, Paper, TextField, Checkbox, Button, FormControlLabel } from '@mui/material';
@@ -16,7 +14,7 @@ import Login_register from "../../component/login_register/index";
 import SearchTags from "../../component/searchTags/index";
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd'; // Correctly Imported Input
-import { ToastContainer, toast } from 'react-toastify'; // Importing ToastContainer and toast correctly
+import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 import "./index.scss";
 
@@ -40,17 +38,17 @@ const Register = () => {
         background: ""
     });
 
-    // Function to update tags state from child component
+   
     const setTags = (tags) => {
         setFormData({ ...formData, tags });
     }
     
-    // Handles tab change for different user types
+    
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);
     };
     
-    // General input change handler for form fields
+   
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData(prevFormData => ({
@@ -59,12 +57,12 @@ const Register = () => {
         }));
     };
 
-    // Handles changes to the background input in the form
+   
     const handleChangeBG = (event) => {
         setFormData({ ...formData, background: event.target.value })
     }
     
-    // Validation functions for various form fields
+    
     const validateSurname = () => {
         if (!formData.surname.trim()) {
             toast.error("Surname is required.");
@@ -135,7 +133,7 @@ const Register = () => {
         try {
             const response = await registerRequest(url, formData);
             if (response.data.code === 200) {
-                navigate('/programme');
+                navigate("/AllTimetable");
             } else {
                 toast.error("Registration failed: Invalid data.");
             }
@@ -230,11 +228,11 @@ const Register = () => {
                         className="button"
                         variant="contained" 
                         fullWidth 
-                        onClick={() => navigate('/AllTimetable')} 
+                        onClick={() => navigate("/AllTimetable")} 
                         sx={{ mt: 1 }}
                         >
                             Back
-                            </Button>
+                        </Button>
                     </Box>
                 </Paper>
             </div>
@@ -243,4 +241,3 @@ const Register = () => {
 }
 
 export default Register;
-

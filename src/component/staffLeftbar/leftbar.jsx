@@ -1,3 +1,10 @@
+/**
+ * Component Name: LeftBar
+ * Description: This component represents the left sidebar navigation menu of the application. 
+ * It provides links to various sections such as timetables, academic history, assignments, etc.
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-11
+ */
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './leftbar.css';
@@ -17,6 +24,7 @@ import examIcon from '../../assets/exam.png';
 import managementIcon from '../../assets/management.png';
 import workIcon from '../../assets/work.png';
 
+// Functional component for the left sidebar
 function LeftBar(props) {
   const [selectedIndex, setSelectedIndex] = useState(props.tabNav);
   const [isExpanded, setExpanded] = useState(true);  // State to toggle sidebar visibility
@@ -25,13 +33,14 @@ function LeftBar(props) {
     return <Link ref={ref} {...props} />;
   });
 
+  // Effect hook to update selected index when props change
   useEffect(() => {
     console.log(props.tabNav);
     setSelectedIndex(props.tabNav);
   }, [props.tabNav]);
 
   
-
+  // Render the sidebar component
   return (
     <div id='leftbar' className={isExpanded ? 'expanded' : 'collapsed'}>
       <button className="toggle-button" onClick={() => setExpanded(!isExpanded)}>
@@ -43,21 +52,25 @@ function LeftBar(props) {
           <img className='logo' src={logo} alt="logo" />
           {isExpanded && (
             <>
-              <Typography className='details' gutterBottom>Staff Name:xxx</Typography>
-              <Typography className='details' gutterBottom>Staff ID:xxx</Typography>
+              <Typography className='details' gutterBottom>Staff Name:localStorage.get('user').staffName</Typography>
+              <Typography className='details' gutterBottom>Staff ID:localStorage.get('user').staffId</Typography>
             </>
           )}
         </CardContent>
       </Card>
 
       <Divider />
+        {/* Sidebar Navigation */}
       <List className={isExpanded ? 'navbox' : 'navbox collapsed'}>
+          {/* List Items */}
         <ListItem button component={CustomLink} className={selectedIndex === 'AllTimetable' || selectedIndex === '' ? 'sure' : ''} to="/AllTimetable">
           <img className='icon' src={timetableIcon} alt="logo" />
           All Timetable
         </ListItem>
         <Divider />
+        {/* Repeat for other list items */}
           <ListItem button component={CustomLink} className={selectedIndex === '/StaffMyTimetable' || selectedIndex === '' ? 'sure' : ''} to="/StaffMyTimetable">
+              {/* Render the timetable icon */}
               <img className='icon' src={timetableIcon} alt="logo" />
               My Timetable
           </ListItem>

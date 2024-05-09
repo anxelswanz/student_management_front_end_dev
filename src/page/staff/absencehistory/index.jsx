@@ -1,3 +1,10 @@
+/**
+ * Component Name: AbsenceHistory
+ * Description: Staff can view all absence history of students
+ * Author: Yuhui Xiao
+ * Created Date: 2024-04-12
+ */
+
 import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LeftBar from './../../../component/staffLeftbar/leftbar';
@@ -16,15 +23,9 @@ import axios from 'axios';
 import './absencehistory.css';
 import '../header.css';
 
-/**
- * Component Name: AbsenceHistory
- * Description: Staff can view all absence history of students
- * Author: Yuhui Xiao
- * Created Date: 2024-04-25
- */
-
+// Dialog component to display absence information
 const AbsenceInfoDialog = ({msg, absence, onOk, onCancel}) => {
-    // 展示请假信息
+    // Display leave information
     const [absenceId, setAbsenceId] = useState(absence?.AbsenceUUID ?? '');
     const [studentId, setStudentId] = useState(absence?.StudentID ?? '');
     const [studentName, setStudentName] = useState(absence?.StudentName ?? '');
@@ -73,12 +74,12 @@ const AbsenceInfoDialog = ({msg, absence, onOk, onCancel}) => {
 }
 
 function AbsenceHistory() {
-    // 初始化数据
-    const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
+    // initialization data
+    const navigate = useNavigate();// React router navigate
+    const [open, setOpen] = useState(false);// Dialog open state
     const [absence, setAbsence] = useState(null);
-    const [msg, setMsg] = useState('');
-
+    const [msg, setMsg] = useState('');// Message for action confirmation
+// Default absence data 
     const defaultAbsences = [
         {
             AbsenceUUID: 1,
@@ -130,17 +131,21 @@ function AbsenceHistory() {
     const [absences, setAbsences] = useState(defaultAbsences);
 
     useEffect(() => {
-        // axios.get('http://localhost:8080/api/staff/getAllAbsenceRequests')
-        //     .then(response => {
-        //         setStudents(response.data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching absences:', error);
-        //     });
+        // Fetch absence data from the server
+        axios.get('http://localhost:8080/api/staff/getAllAbsenceRequests', {
+            params: {
+                staffID: localStorage.getItem('user').id
+            }
+        })
+            .then(response => {
+                setAbsences(response.data)
+            })
+            .catch(error => {
+                console.error('Error fetching absences:', error);
+            });
     })
 
-
-
+ // Action to handle approval or rejection of absence request
     const handleOk = () => {
         if (msg === 'Approve') {
             handleApprove(absence);
@@ -149,32 +154,44 @@ function AbsenceHistory() {
         }
         setOpen(false);
     }
-
+ // Action to approve absence request
     const handleApprove = (absence) => {
-
-        // axios.post('http://localhost:8080/api/staff/approveAbsenceRequest', absence)
-        //     .then(response => {
-        //         console.log('Absence request approved:', response);
-        //         setAbsences(absences.filter(a => a.AbsenceUUID !== absence.AbsenceUUID));
-        //     })
-        //     .catch(error => {
-        //         console.error('Error approving absence request:', error);
-        //     });
         absence.Status = '1';
-    }
+        axios.get('http://localhost:8080/api/staff/updateAbsenceRequest', {
+            params: {
+                absenceId: absence.AbsenceUUID,
+                status: '1'
+            }
 
+        })
+            .then(response => {
+                console.log('Absence request approved:', response);
+            })
+            .catch(error => {
+                console.error('Error approving absence request:', error);
+            });
+
+    }
+// Action to reject absence request
     const handleReject = (absence) => {
-        // axios.post('http://localhost:8080/api/staff/rejectAbsenceRequest', absence)
-        //     .then(response => {
-        //         console.log('Absence request rejected:', response);
-        //         setAbsences(absences.filter(a => a.AbsenceUUID !== absence.AbsenceUUID));
-        //     })
-        //     .catch(error => {
-        //         console.error('Error rejecting absence request:', error);
-        //     });
         absence.Status = '2';
-    }
+         // API call to update absence request status
+        axios.get('http://localhost:8080/api/staff/updateAbsenceRequest', {
+            params: {
+                absenceId: absence.AbsenceUUID,
+                status: '2'
+            }
 
+        })
+            .then(response => {
+                console.log('Absence request approved:', response);
+            })
+            .catch(error => {
+                console.error('Error approving absence request:', error);
+            });
+
+    }
+ // Open dialog to confirm action on absence request
     const handleClickOpen = (absence, msg) => {
         console.log(absence);
         setOpen(true);
@@ -191,7 +208,7 @@ function AbsenceHistory() {
             <div className='maincenter'>
                 <div className='topline'>
                     <div className='topMain'>
-                        {/* 渲染程序名称和描述 */}
+                        {/* Renderer name and description */}
                         <h2 className='gFont'>Absence History</h2>
                         <p className="description">You can view and handle all your leave history here</p>
                     </div>

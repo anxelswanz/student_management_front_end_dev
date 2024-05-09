@@ -88,9 +88,9 @@
   padding: 20px 0;
 }
 #exam .maincenter .tipbox p {
-  font-family: 'Open Sans', sans-serif; /* 修改为你喜欢的字体 */
-  font-size: 20px; /* 修改字体大小 */
-  line-height: 34px; /* 修改行高 */
+  font-family: 'Open Sans', sans-serif; 
+  font-size: 20px; 
+  line-height: 34px; 
 }
 
 

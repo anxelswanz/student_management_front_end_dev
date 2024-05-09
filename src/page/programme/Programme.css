@@ -99,10 +99,10 @@
   background-color: #1976d2;
   color: #ffffff;
 }#Programme .mainList .tablebox .MuiTableCell-head {
-  font-size: 20px; /* 调整为你想要的大小 */
-  font-weight: bold; /* 如果你希望表头字体加粗 */
+  font-size: 20px; 
+  font-weight: bold; 
 }
 #Programme .mainList .tablebox .MuiTableCell-root {
-  font-size: 18px; /* 调整为你想要的大小 */
-  color: #333; /* 设置字体颜色 */
+  font-size: 18px; 
+  color: #333; 
 }

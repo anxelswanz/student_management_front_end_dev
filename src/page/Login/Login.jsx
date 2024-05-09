@@ -1,9 +1,9 @@
 /**
- * Component Name: searchTags
+ * Component Name: Login
  * Description: The page of Login.
  * Author: Qianfeng Zhang
- * Created Date: 2024-04-15
- * Modified By: Qianfeng Zhang
+ * Created Date: 2024-04-24
+ * Modified By: Ronghui Zhong
  * Last Modified: 2024-05-01
  */
 
@@ -24,56 +24,55 @@ export default function Login() {
 
   // Function to handle the login form submission
   const handleSubmit = async () => {
-    let error = false; // Define an error flag, initially set to false
+    let error = false; 
 
     // Define allowed character rules, e.g., letters, numbers, and some special characters
     const validRegex = /^[a-zA-Z0-9_.-]*$/;
 
-    // Validate ID independently
+    
     if (!id.trim()) {
-      toast.error("ID cannot be empty."); // Display error message if ID is empty
-      error = true; // Set error flag to true if ID is empty
+      toast.error("ID cannot be empty."); 
+      error = true; 
     } else if (!validRegex.test(id)) {
-      toast.error("ID contains invalid characters."); // Display error message if ID contains invalid characters
-      error = true; // Set error flag to true
+      toast.error("ID contains invalid characters."); 
+      error = true; 
     }
 
-    // Validate password independently
+    
     if (!password.trim()) {
-      toast.error("Password cannot be empty."); // Display error message if password is empty
-      error = true; // Set error flag to true if password is empty
+      toast.error("Password cannot be empty."); 
+      error = true; 
     } else if (!validRegex.test(password)) {
-      toast.error("Password contains invalid characters."); // Display error message if password contains invalid characters
-      error = true; // Set error flag to true
+      toast.error("Password contains invalid characters."); 
+      error = true; 
     }
 
-    // If there is an error, return immediately without performing the login request
+  
     if (error) {
       return;
     }
-  // If no errors, attempt to log in
 
   
   try {
-    const response = await loginRequest(id, password); // Make the login API request
+    const response = await loginRequest(id, password); 
     if (response.data.code === 200) {
-      localStorage.setItem("user", JSON.stringify(response.data.obj)); // Save user data in local storage
+      localStorage.setItem("user", JSON.stringify(response.data.obj)); 
 
       // Check the first character of ID and navigate accordingly
       if (id.startsWith('S')) {
         navigate("/programme"); // Navigate to the programme page if ID starts with 'S'
       } else if (id.startsWith('E')) {
-        navigate("/staffManagement"); // Navigate to the staff management page if ID starts with 'E'
+        navigate("/AllTimetable"); // Navigate to the staff management page if ID starts with 'E'
       } else {
-        // If ID does not start with 'S' or 'E', handle accordingly (e.g., error message)
-        toast.error("Login failed: Invalid user type."); // Display error message for invalid user type
+        
+        toast.error("Login failed: Invalid user type."); 
       }
     } else {
-      toast.error("Login failed: Invalid ID or password."); // Error message on login failure
+      toast.error("Login failed: Invalid ID or password."); 
     }
   } catch (error) {
-    console.error('Login failed:', error); // Log errors in the console
-    toast.error("Login request failed: Please check your network connection or contact support."); // Display network or server error message
+    console.error('Login failed:', error); 
+    toast.error("Login request failed: Please check your network connection or contact support."); 
   }
 };
   

@@ -19,8 +19,8 @@
         li{
             transition: .3s;
             cursor: pointer;
-            list-style-type:decimal;
-            margin-left: 1rem;
+            list-style-type: none; // Remove the number before the list item
+            margin-left: 0; // Remove extra left margin
         }
         li:hover{
             color: red;
